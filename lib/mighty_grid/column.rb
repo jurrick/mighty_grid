@@ -1,19 +1,26 @@
 module MightyGrid
   class Column
 
-    attr_reader :display_property
-    attr_accessor :render_value, :attrs
+    attr_reader :display_property, :attribute, :attrs, :th_attrs, :options, :title
+    attr_accessor :render_value
 
     def initialize(attr_or_options=nil, options=nil, &block)
       @attrs = {}
       if block_given?
+        @options = attr_or_options
         @display_property = :block
         @render_value = block
-        @attrs = attr_or_options[:html] if attr_or_options && attr_or_options.has_key?(:html)
-      else
-        @display_property = :attr
-        @render_value = attr_or_options
         @attrs = options[:html] if options && options.has_key?(:html)
+        @th_attrs = options[:th_html] if options && options.has_key?(:th_html)
+        @title = options[:title] || ''
+      else
+        @options = options
+        @attribute = attr_or_options
+        @display_property = :attr
+        @render_value = attribute
+        @attrs = options[:html] if options && options.has_key?(:html)
+        @th_attrs = options[:th_html] if options && options.has_key?(:th_html)
+        @title = options[:title] || ''
       end
     end
 

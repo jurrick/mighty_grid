@@ -12,13 +12,37 @@ module MightyGrid
       block.call(rendering)
 
       table_html_attrs = options[:html] || {}
+      table_html_attrs[:class] += ' mighty-grid'
+
       header_tr_html = options[:header_tr_html] || {}
+
+      grid.read
 
       grid.output_buffer = content_tag :table, table_html_attrs do
         html = content_tag :thead do
           content_tag :tr, header_tr_html do
-            rendering.th_columns.map{|column| content_tag :th, column[:title], column[:html]}.join.html_safe
+            rendering.columns.map { |column|
+              content_tag :th, column.th_attrs do
+                if column.options[:ordering]
+                  link_to(column.title, "?#{MightyGrid::MgHash.rec_merge(grid.params, {grid.name => {order: column.attribute, order_direction: grid.order_direction}}).except('controller', 'action').to_query}").html_safe
+                else
+                  column.title.html_safe
+                end
+              end
+            }.join.html_safe
           end
+        end
+
+        html += content_tag :tfoot do
+          html_record = content_tag :tr do
+            content_tag :td, colspan: rendering.total_columns do
+              html_pag = paginate(grid.relation, theme: 'mighty_grid', param_name: "#{grid.name}[page]")
+              html_pag += page_entries_info(grid.relation)
+              html_pag.html_safe
+            end
+          end
+
+          html_record.html_safe
         end
 
         html += content_tag :tbody do
@@ -39,5 +63,6 @@ module MightyGrid
     def render_grid(grid)
       grid.output_buffer.html_safe
     end
+
   end
 end

@@ -1,6 +1,6 @@
 module MightyGrid
   class GridRenderer
-    attr_reader :columns, :th_columns
+    attr_reader :columns, :th_columns, :total_columns
 
     def initialize(grid, view)
       @columns = []
@@ -10,14 +10,18 @@ module MightyGrid
     def column(attr_or_options = {}, options=nil, &block)
       if block_given?
         options = attr_or_options.symbolize_keys
-        @th_columns << {title: options[:title], html: options[:th_html]}
-        @columns << MightyGrid::Column.new(options[:html], &block)
+        @columns << MightyGrid::Column.new(options, &block)
       else
-        @columns << MightyGrid::Column.new(attr_or_options, options)
-        th_column = {title: attr_or_options.to_s.titleize}
-        th_column[:html] = options ? options[:th_html] : {}
-        @th_columns << th_column
+        attribute = attr_or_options.to_sym
+        options = {} unless options.is_a?(Hash)
+        opts = {
+          title: attr_or_options.to_s.titleize,
+          ordering: true,
+          attribute: attribute
+        }.merge!(options)
+        @columns << MightyGrid::Column.new(attribute, opts)
       end
+      @total_columns = @columns.count
     end
   end
 end
