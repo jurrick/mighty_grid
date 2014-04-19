@@ -10,18 +10,15 @@ module MightyGrid
         @options = attr_or_options
         @display_property = :block
         @render_value = block
-        @attrs = options[:html] if options && options.has_key?(:html)
-        @th_attrs = options[:th_html] if options && options.has_key?(:th_html)
-        @title = options[:title] || ''
       else
         @options = options
         @attribute = attr_or_options
         @display_property = :attr
         @render_value = attribute
-        @attrs = options[:html] if options && options.has_key?(:html)
-        @th_attrs = options[:th_html] if options && options.has_key?(:th_html)
-        @title = options[:title] || ''
       end
+      @attrs = options[:html] if options && options.has_key?(:html)
+      @th_attrs = options[:th_html] if options && options.has_key?(:th_html)
+      @title = options[:title] || ''
     end
 
     def render(record)
