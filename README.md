@@ -2,7 +2,9 @@
 
 MightyGrid is a flexible grid solution for Rails.
 
+[![Gem Version](https://badge.fury.io/rb/mighty_grid.svg)](http://badge.fury.io/rb/mighty_grid)
 [![Build Status](https://travis-ci.org/jurrick/mighty_grid.svg?branch=master)](https://travis-ci.org/jurrick/mighty_grid)
+[![Coverage Status](https://coveralls.io/repos/jurrick/mighty_grid/badge.png)](https://coveralls.io/r/jurrick/mighty_grid)
 
 ## Installation
 
