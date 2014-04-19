@@ -1,6 +1,8 @@
 # MightyGrid
 
-TODO: Write a gem description
+MightyGrid is a flexible grid solution for Rails.
+
+[![Build Status](https://travis-ci.org/jurrick/mighty_grid.svg?branch=master)](https://travis-ci.org/jurrick/mighty_grid)
 
 ## Installation
 
