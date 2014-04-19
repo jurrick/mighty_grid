@@ -12,7 +12,9 @@ module MightyGrid
       block.call(rendering)
 
       table_html_attrs = options[:html] || {}
-      table_html_attrs[:class] += ' mighty-grid'
+      table_html_attrs[:class] ||= ''
+      table_html_classes = ["mighty-grid"] + MightyGrid.config.table_class.split(' ')
+      table_html_attrs[:class] = (table_html_classes + table_html_attrs[:class].split(' ')).reject(&:blank?).join(' ')
 
       header_tr_html = options[:header_tr_html] || {}
 

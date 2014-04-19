@@ -1,4 +1,5 @@
 require 'mighty_grid/version'
+require 'mighty_grid/config'
 require 'mighty_grid/mighty_grid_ext'
 require 'mighty_grid/column'
 require 'mighty_grid/grid_renderer'
@@ -36,8 +37,8 @@ module MightyGrid
 
       @options = {
         page: 1,
-        per_page: 10,
-        name: 'grid'
+        per_page: MightyGrid.config.per_page,
+        name: MightyGrid.config.grid_name
       }
 
       opts.assert_valid_keys(@options.keys)
@@ -75,7 +76,7 @@ module MightyGrid
     end
 
     def order_direction
-      (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction']]).first : 'asc'
+      (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction']]).first : MightyGrid.config.order_direction
     end
 
   end
