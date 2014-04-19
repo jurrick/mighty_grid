@@ -6,6 +6,7 @@ gem "rails", "~> 3.2.15"
 gem "mighty_grid", :path => "../"
 
 group :test do
+  gem "generator_spec"
   gem "coveralls", :require => false
 end
 
