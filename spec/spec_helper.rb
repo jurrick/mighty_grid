@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 begin
   require 'rails'
+  require 'rails/generators'
 rescue LoadError
 end
 
