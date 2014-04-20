@@ -23,7 +23,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### General configuration options
+
+You can configure the following default values by overriding these values using <tt>MightyGrid.configure</tt> method.
+```
+per_page          # 15 by default
+order_direction   # 'asc' by default
+grid_name         # 'grid' by default
+table_class       # '' by default
+```
+
+There's a handy generator that generates the default configuration file into config/initializers directory.
+Run the following generator command, then edit the generated file.
+
+    $ rails g mighty_grid:config
 
 ## Contributing
 
