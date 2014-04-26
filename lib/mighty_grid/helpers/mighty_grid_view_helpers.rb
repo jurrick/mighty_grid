@@ -66,5 +66,16 @@ module MightyGrid
       grid.output_buffer.html_safe
     end
 
+    def mighty_filter_for(grid, options={}, &block)
+      html_options = options[:html] ||= {}
+      html_options[:method] = options.delete(:method) if options.has_key?(:method)
+      html_options[:method] ||= :get
+
+      filter = FilterRenderer.new(grid, self)
+
+      output = capture(filter, &block)
+      form_tag(options[:url] || {}, html_options){ output }
+    end
+
   end
 end
