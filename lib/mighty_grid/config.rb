@@ -15,7 +15,9 @@ module MightyGrid
     config_accessor :per_page
     config_accessor :order_direction
     config_accessor :grid_name
+    config_accessor :header_tr_class
     config_accessor :table_class
+    config_accessor :pagination_theme
   end
 
   configure do |config|
@@ -23,5 +25,7 @@ module MightyGrid
     config.order_direction = 'asc'
     config.grid_name = 'grid'
     config.table_class = ''
+    config.header_tr_class = ''
+    config.pagination_theme = 'mighty_grid'
   end
 end

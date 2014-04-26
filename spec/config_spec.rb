@@ -46,4 +46,26 @@ describe MightyGrid::Configuration do
       after { MightyGrid.configure {|c| c.table_class = ''} }
     end
   end
+
+  describe 'header_tr_class' do
+    context 'by default' do
+      its(:header_tr_class) { should == '' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.header_tr_class = 'active'} }
+      its(:header_tr_class) { should == 'active' }
+      after { MightyGrid.configure {|c| c.header_tr_class = ''} }
+    end
+  end
+
+  describe 'pagination_template' do
+    context 'by default' do
+      its(:pagination_theme) { should == 'mighty_grid' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.pagination_theme = 'pagination1'} }
+      its(:pagination_theme) { should == 'pagination1' }
+      after { MightyGrid.configure {|c| c.pagination_theme = 'mighty_grid'} }
+    end
+  end
 end

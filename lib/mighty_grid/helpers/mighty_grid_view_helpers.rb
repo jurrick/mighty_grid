@@ -14,9 +14,12 @@ module MightyGrid
       table_html_attrs = options[:html] || {}
       table_html_attrs[:class] ||= ''
       table_html_classes = ["mighty-grid"] + MightyGrid.config.table_class.split(' ')
-      table_html_attrs[:class] = (table_html_classes + table_html_attrs[:class].split(' ')).reject(&:blank?).join(' ')
+      table_html_attrs[:class] = (table_html_classes + table_html_attrs[:class].split(' ')).reject(&:blank?).uniq.join(' ')
 
       header_tr_html = options[:header_tr_html] || {}
+      header_tr_html[:class] ||= ''
+      header_tr_html_classes = MightyGrid.config.header_tr_class.split(' ')
+      header_tr_html[:class] = (header_tr_html_classes + header_tr_html[:class].split(' ')).reject(&:blank?).uniq.join(' ')
 
       grid.read
 
@@ -38,7 +41,7 @@ module MightyGrid
         html += content_tag :tfoot do
           html_record = content_tag :tr do
             content_tag :td, colspan: rendering.total_columns do
-              html_pag = paginate(grid.relation, theme: 'mighty_grid', param_name: "#{grid.name}[page]")
+              html_pag = paginate(grid.relation, theme: MightyGrid.config.pagination_theme, param_name: "#{grid.name}[page]")
               html_pag += page_entries_info(grid.relation)
               html_pag.html_safe
             end

@@ -31,6 +31,8 @@ per_page          # 15 by default
 order_direction   # 'asc' by default
 grid_name         # 'grid' by default
 table_class       # '' by default
+header_tr_class   # '' by default
+pagination_theme  # 'mighty_grid' by default
 ```
 
 There's a handy generator that generates the default configuration file into config/initializers directory.
