@@ -21,6 +21,27 @@ Or install it yourself as:
 
     $ gem install mighty_grid
 
+## Quick Start
+
+### Controller
+
+You can define class or relation in <tt>init_grid</tt> method.
+```
+def index
+  @products_grid = init_grid(Product)
+end
+```
+
+### Show View
+
+```
+<%= grid @products_grid do |g| %>
+  <% - g.column :id %>
+  <% - g.column :name %>
+  <% - g.column :description %>
+<% end %>
+```
+
 ## Usage
 
 ### General configuration options
