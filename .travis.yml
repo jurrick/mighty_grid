@@ -10,6 +10,6 @@ env:
   CODECLIMATE_REPO_TOKEN: 47bc411a11ccfed015bf25395d8204600c899e530c1c4beed1b7197aa61c6fb6
 
 gemfile:
-  - gemfiles/3.2.gemfile
-  - gemfiles/4.0.gemfile
-  - gemfiles/4.1.gemfile
+  - gemfiles/rails_32.gemfile
+  - gemfiles/rails_40.gemfile
+  - gemfiles/rails_41.gemfile
