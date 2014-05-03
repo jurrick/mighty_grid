@@ -78,7 +78,7 @@ module MightyGrid
     end
 
     def order_direction
-      (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction']]).first : MightyGrid.config.order_direction
+      (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end
 
     def like_operator

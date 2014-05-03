@@ -2,13 +2,16 @@
 
 source "https://rubygems.org"
 
-gem "rails", "~> 4.0.0"
-gem "mighty_grid", :path => "../"
+gem "rails", "~> 3.2.15"
+gem "activerecord", "~> 3.2.15", :require => "active_record"
 
 group :test do
+  gem "sqlite3"
   gem "generator_spec"
   gem "coveralls", :require => false
   gem "codeclimate-test-reporter", :require => nil
+  gem "capybara"
+  gem "database_cleaner"
 end
 
 gemspec :path => "../"

@@ -1,14 +1,14 @@
-appraise "3.2" do
+appraise "rails_32" do
   gem "rails", "~> 3.2.15"
-  gem "mighty_grid", :path => "../"
+  gem "activerecord", "~> 3.2.15", require: 'active_record'
 end
 
-appraise "4.0" do
+appraise "rails_40" do
   gem "rails", "~> 4.0.0"
-  gem "mighty_grid", :path => "../"
+  gem "activerecord", "~> 4.0.0", require: 'active_record'
 end
 
-appraise "4.1" do
-  gem "rails", "~> 4.1.0.beta"
-  gem "mighty_grid", :path => "../"
+appraise "rails_41" do
+  gem "rails", "~> 4.1.0"
+  gem "activerecord", "~> 4.1.0", require: 'active_record'
 end

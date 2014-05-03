@@ -1,6 +1,7 @@
 module MightyGrid; end
 
 require 'action_view'
+require 'kaminari'
 
 require 'mighty_grid/version'
 require 'mighty_grid/config'
@@ -14,8 +15,6 @@ require 'mighty_grid/mighty_grid_controller'
 
 # GENERATORS
 require 'generators/mighty_grid/config_generator'
-
-require 'kaminari.rb'
 
 require 'mighty_grid/engine'
 require 'mighty_grid/base'
