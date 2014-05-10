@@ -42,7 +42,9 @@ module MightyGrid
           html_record = content_tag :tr do
             content_tag :td, colspan: rendering.total_columns do
               html_pag = paginate(grid.relation, theme: MightyGrid.config.pagination_theme, param_name: "#{grid.name}[page]")
-              html_pag += page_entries_info(grid.relation)
+              html_pag += content_tag :strong do
+                "#{grid.relation.offset_value + 1} &ndash; #{grid.relation.offset_value + grid.relation.size} of #{grid.relation.total_count}".html_safe
+              end
               html_pag.html_safe
             end
           end
