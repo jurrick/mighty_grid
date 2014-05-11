@@ -18,4 +18,16 @@ module MightyGrid
       end
     end
   end
+
+  module MgHTML
+    class << self
+      def join_html_classes(html_options, *html_classes)
+        html_options[:class] ||= ''
+        html_options[:class] = ([html_options[:class]] + html_classes).reject(&:blank?).map do |h_classes|
+          h_classes.split(' ')
+        end.flatten.uniq.join(' ')
+        html_options
+      end
+    end
+  end
 end

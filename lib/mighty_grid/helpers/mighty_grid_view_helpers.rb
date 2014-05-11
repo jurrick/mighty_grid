@@ -12,29 +12,33 @@ module MightyGrid
       block.call(rendering)
 
       table_html_attrs = options[:html] || {}
-      table_html_attrs[:class] ||= ''
-      table_html_classes = ["mighty-grid"] + MightyGrid.config.table_class.split(' ')
-      table_html_attrs[:class] = (table_html_classes + table_html_attrs[:class].split(' ')).reject(&:blank?).uniq.join(' ')
+      table_html_attrs = MightyGrid::MgHTML.join_html_classes(table_html_attrs, 'mighty-grid', MightyGrid.config.table_class)
 
       grid.read
 
-      grid.output_buffer = content_tag :table, table_html_attrs do
-        html = header_grid_html(rendering, grid, options)
-        html += footer_grid_html(rendering, grid)
-        html += body_grid_html(rendering, grid)
-        html
+      if grid.relation.total_count > 0
+        grid.output_buffer = content_tag :table, table_html_attrs do
+          html = header_grid_html(rendering, grid, options)
+          html += footer_grid_html(rendering, grid)
+          html += body_grid_html(rendering, grid)
+          html
+        end
+      else
+        grid.output_buffer = blank_slate_template(rendering)
       end
 
     end
 
+    # Used after <tt>define_grid</tt> to actually output the grid HTML code.
+    # Usually used with detached filters: first <tt>define_grid</tt>, then <tt>grid_filter</tt>s, and then
+    # <tt>render_grid</tt>
     def render_grid(grid)
       grid.output_buffer.html_safe
     end
 
     def mighty_filter_for(grid, options={}, &block)
       html_options = options[:html] ||= {}
-      html_options[:class] ||= ''
-      html_options[:class] = (['mighty-grid-filter'] + html_options[:class].split(' ')).reject(&:blank?).uniq.join(' ')
+      html_options = MightyGrid::MgHTML.join_html_classes(html_options, 'mighty-grid-filter')
       html_options[:method] = options.delete(:method) if options.has_key?(:method)
       html_options[:method] ||= :get
 
@@ -46,9 +50,7 @@ module MightyGrid
 
     def header_grid_html(rendering, grid, options)
       header_tr_html = options[:header_tr_html] || {}
-      header_tr_html[:class] ||= ''
-      header_tr_html_classes = MightyGrid.config.header_tr_class.split(' ')
-      header_tr_html[:class] = (header_tr_html_classes + header_tr_html[:class].split(' ')).reject(&:blank?).uniq.join(' ')
+      header_tr_html = MightyGrid::MgHTML.join_html_classes(header_tr_html, MightyGrid.config.header_tr_class)
 
       content_tag :thead do
         content_tag :tr, header_tr_html do
@@ -79,7 +81,7 @@ module MightyGrid
 
     def footer_grid_html(rendering, grid)
       content_tag :tfoot do
-        html_record = content_tag :tr do
+        content_tag :tr do
           content_tag :td, colspan: rendering.total_columns do
             html_pag = paginate(grid.relation, theme: MightyGrid.config.pagination_theme, param_name: "#{grid.name}[page]")
             html_pag += content_tag :strong do
@@ -87,9 +89,19 @@ module MightyGrid
             end
             html_pag.html_safe
           end
-        end
+        end.html_safe
+      end
+    end
 
-        html_record.html_safe
+    def blank_slate_template(rendering)
+      if rendering.blank_slate_handler.present?
+        case rendering.blank_slate_handler
+        when Proc; return rendering.blank_slate_handler.call
+        when String; return rendering.blank_slate_handler
+        when Hash; return render(rendering.blank_slate_handler)
+        end
+      else
+        content_tag :div, 'No records found'
       end
     end
 
