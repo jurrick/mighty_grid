@@ -77,6 +77,10 @@ module MightyGrid
       params[name] || {}
     end
 
+    def order_params(attribute)
+      {@name => {order: attribute, order_direction: order_direction}}
+    end
+
     def order_direction
       (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end

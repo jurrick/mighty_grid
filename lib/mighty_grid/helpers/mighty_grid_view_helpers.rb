@@ -56,8 +56,8 @@ module MightyGrid
         content_tag :tr, header_tr_html do
           rendering.columns.map { |column|
             content_tag :th, column.th_attrs do
-              if column.options[:ordering]
-                link_to(column.title, "?#{MightyGrid::MgHash.rec_merge(grid.params, {grid.name => {order: column.attribute, order_direction: grid.order_direction}}).except('controller', 'action').to_query}").html_safe
+              if column.options[:ordering] && column.attribute.present?
+                link_to(column.title, "?#{MightyGrid::MgHash.rec_merge(grid.params, grid.order_params(column.attribute)).except('controller', 'action').to_query}").html_safe
               else
                 column.title.html_safe
               end
@@ -96,9 +96,9 @@ module MightyGrid
     def blank_slate_template(rendering)
       if rendering.blank_slate_handler.present?
         case rendering.blank_slate_handler
-        when Proc; return rendering.blank_slate_handler.call
-        when String; return rendering.blank_slate_handler
-        when Hash; return render(rendering.blank_slate_handler)
+        when Proc; rendering.blank_slate_handler.call
+        when String; rendering.blank_slate_handler
+        when Hash; render(rendering.blank_slate_handler)
         end
       else
         content_tag :div, 'No records found'
