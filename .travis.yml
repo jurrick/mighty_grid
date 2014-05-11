@@ -6,10 +6,11 @@ rvm:
 
 script: bundle exec rake spec
 
-env:
-  CODECLIMATE_REPO_TOKEN: 47bc411a11ccfed015bf25395d8204600c899e530c1c4beed1b7197aa61c6fb6
-
 gemfile:
   - gemfiles/rails_32.gemfile
   - gemfiles/rails_40.gemfile
   - gemfiles/rails_41.gemfile
+
+addons:
+  code_climate:
+    repo_token: 47bc411a11ccfed015bf25395d8204600c899e530c1c4beed1b7197aa61c6fb6
