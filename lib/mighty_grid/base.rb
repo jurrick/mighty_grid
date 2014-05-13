@@ -31,7 +31,7 @@ module MightyGrid
 
     def read
       apply_filters
-      @relation = @relation.order(@mg_params[:order] => @mg_params[:order_direction].to_sym) if @mg_params[:order].present? && @mg_params[:order_direction].present?
+      @relation = @relation.order(@mg_params[:order] => current_order_direction.to_sym) if @mg_params[:order].present? && current_order_direction.present?
       @relation = @relation.page(@mg_params[:page]).per(@mg_params[:per_page])
     end
 
@@ -78,10 +78,19 @@ module MightyGrid
     end
 
     def order_params(attribute)
-      {@name => {order: attribute, order_direction: order_direction}}
+      direction = attribute.to_s == @mg_params[:order] ? another_order_direction : 'asc'
+      {@name => {order: attribute, order_direction: direction}}
     end
 
-    def order_direction
+    def current_order_direction
+      direction = nil
+      if current_grid_params.has_key?('order_direction') && ['asc', 'desc'].include?(current_grid_params['order_direction'].downcase)
+        direction = current_grid_params['order_direction'].downcase
+      end
+      direction
+    end
+
+    def another_order_direction
       (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end
 
