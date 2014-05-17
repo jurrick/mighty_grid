@@ -8,10 +8,12 @@ gem "activerecord", "~> 4.1.0", :require => "active_record"
 group :test do
   gem "sqlite3"
   gem "generator_spec"
-  gem "coveralls", :require => false
-  gem "codeclimate-test-reporter", :require => nil
   gem "capybara"
   gem "database_cleaner"
+  gem "coveralls", :require => false
+  gem "codeclimate-test-reporter", :require => nil
+  gem "pg", :require => false
+  gem "mysql2", :require => false
 end
 
 gemspec :path => "../"
