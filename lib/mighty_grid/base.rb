@@ -11,9 +11,11 @@ module MightyGrid
       @filters = {}
 
       @options = {
-        page: 1,
-        per_page: MightyGrid.config.per_page,
-        name: MightyGrid.config.grid_name
+        :page     => 1,
+        :per_page => MightyGrid.config.per_page,
+        :name     => MightyGrid.config.grid_name,
+        :include  => nil,
+        :joins    => nil,
       }
 
       opts.assert_valid_keys(@options.keys)
@@ -32,7 +34,11 @@ module MightyGrid
     def read
       apply_filters
       @relation = @relation.order(@mg_params[:order] => current_order_direction.to_sym) if @mg_params[:order].present? && current_order_direction.present?
-      @relation = @relation.page(@mg_params[:page]).per(@mg_params[:per_page])
+      @relation = @relation.
+                    page(@mg_params[:page]).
+                    per(@mg_params[:per_page]).
+                    includes(@options[:include]).
+                    joins(@options[:joins])
     end
 
     def apply_filters

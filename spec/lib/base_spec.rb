@@ -5,7 +5,7 @@ describe MightyGrid::Base do
   before(:all) do
     @controller = ActionView::TestCase::TestController.new
 
-    @default_options = {page: 1, per_page: 15, name: 'grid'}
+    @default_options = {page: 1, per_page: 15, name: 'grid', :include => nil, joins: nil}
   end
 
   describe '#new' do
