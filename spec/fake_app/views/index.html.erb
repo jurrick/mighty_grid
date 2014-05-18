@@ -1,0 +1,8 @@
+<%= mighty_filter_for @products_grid do |filter| %>
+  <%= filter.text_field :name %>
+  <%= filter.submit %>
+<% end %>
+
+<%= grid @products_grid do |g| %>
+<% g.column :name %>
+<% end %>

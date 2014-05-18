@@ -29,11 +29,7 @@ class ApplicationController < ActionController::Base; end
 class ProductsController < ApplicationController
   def index
     @products_grid = init_grid(Product)
-    render :inline => <<-ERB
-<%= grid @products_grid do |g| %>
-<% g.column :name %>
-<% end %>
-ERB
+    render 'spec/fake_app/views/index', layout: false
   end
 end
 
