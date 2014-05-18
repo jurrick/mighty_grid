@@ -7,7 +7,8 @@ module MightyGrid
     end
 
     def label(name, content_or_options = nil, options = nil, &block)
-      label_tag(name, content_or_options, options, &block)
+      filter_name = @grid.get_filter_name(name).parameterize('_')
+      label_tag(filter_name, content_or_options, options, &block)
     end
 
     def text_field(name, options={})
