@@ -54,7 +54,7 @@ pagination_theme  # 'mighty_grid' by default
 There's a handy generator that generates the default configuration file into config/initializers directory.
 Run the following generator command, then edit the generated file.
 
-    $ rails g mighty_grid:config
+    $ rails g mighty_grid:install
 
 ## Contributing
 

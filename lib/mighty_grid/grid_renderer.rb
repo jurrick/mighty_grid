@@ -3,6 +3,7 @@ module MightyGrid
     attr_reader :columns, :th_columns, :total_columns, :blank_slate_handler
 
     def initialize(grid, view)
+      @grid = grid
       @columns = []
       @th_columns = []
       @blank_slate_handler = nil
@@ -16,7 +17,7 @@ module MightyGrid
         attribute = attr_or_options.to_sym
         options = {} unless options.is_a?(Hash)
         opts = {
-          title: attr_or_options.to_s.titleize,
+          title: @grid.klass.human_attribute_name(attribute),
           ordering: true,
           attribute: attribute
         }.merge!(options)

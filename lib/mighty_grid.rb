@@ -14,7 +14,7 @@ require 'mighty_grid/helpers/mighty_grid_view_helpers'
 require 'mighty_grid/mighty_grid_controller'
 
 # GENERATORS
-require 'generators/mighty_grid/config_generator'
+require 'generators/mighty_grid/install_generator'
 
 require 'mighty_grid/engine'
 require 'mighty_grid/base'

@@ -32,12 +32,14 @@ module MightyGrid
       check_box_tag(@grid.get_filter_name(name), value, checked, options)
     end
 
-    def submit(content = "Apply changes", options = {})
+    def submit(content = nil, options = {})
+      content = I18n.t("mighty_grid.filters.submit", default: 'Apply changes') if content.blank?
       options.merge!(type: :submit)
       content_tag(:button, content, options)
     end
 
-    def reset(content = "Reset changes", options = {})
+    def reset(content = nil, options = {})
+      content = I18n.t("mighty_grid.filters.reset", default: 'Reset changes') if content.blank?
       options.merge!(type: :reset)
       content_tag(:button, content, options)
     end
