@@ -1,6 +1,10 @@
 require 'active_support/configurable'
 
 module MightyGrid
+  # Configures global settings for MightyGrid
+  #   MightyGrid.configure do |config|
+  #     config.grid_name = 'g'
+  #   end
   def self.configure(&block)
     yield @config ||= MightyGrid::Configuration.new
   end

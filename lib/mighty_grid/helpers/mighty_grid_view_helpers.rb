@@ -36,6 +36,7 @@ module MightyGrid
       grid.output_buffer.html_safe
     end
 
+    # Creates a form to filter the data in the target grid.
     def mighty_filter_for(grid, options={}, &block)
       html_options = options[:html] ||= {}
       html_options = MightyGrid::MgHTML.join_html_classes(html_options, 'mighty-grid-filter')

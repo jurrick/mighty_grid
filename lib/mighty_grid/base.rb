@@ -44,10 +44,10 @@ module MightyGrid
     def apply_filters
       filter_params.each do |filter_name, filter_value|
         next if filter_value.blank? || !klass.column_names.include?(filter_name)
-        if @filters.has_key?(filter_name.to_sym) && Array === @filters[filter_name.to_sym] ||
-          klass.columns_hash[filter_name].type == :boolean
+        field_type = klass.columns_hash[filter_name].type
+        if @filters.has_key?(filter_name.to_sym) && Array === @filters[filter_name.to_sym] || field_type == :boolean
           @relation = @relation.where(filter_name => filter_value)
-        elsif [:string, :text].include?(klass.columns_hash[filter_name].type)
+        elsif [:string, :text].include?(field_type)
           @relation = @relation.where("\"#{klass.table_name}\".\"#{filter_name}\" #{like_operator} ?", "%#{filter_value}%")
         end
       end
