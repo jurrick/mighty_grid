@@ -48,7 +48,7 @@ module MightyGrid
         if @filters.has_key?(filter_name.to_sym) && Array === @filters[filter_name.to_sym] || field_type == :boolean
           @relation = @relation.where(filter_name => filter_value)
         elsif [:string, :text].include?(field_type)
-          @relation = @relation.where("\"#{klass.table_name}\".\"#{filter_name}\" #{like_operator} ?", "%#{filter_value}%")
+          @relation = @relation.where("#{klass.table_name}.#{filter_name} #{like_operator} ?", "%#{filter_value}%")
         end
       end
     end
