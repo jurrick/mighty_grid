@@ -10,14 +10,14 @@ describe MightyGrid::Base do
 
   describe '#new' do
     context 'by default' do
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:params) { should == {} }
       its(:options) { should == @default_options }
       its(:mg_params) { should == @default_options }
       its(:filters) { should == {} }
       its(:name) { should == 'grid' }
-      its(:relation) { should == Product }
-      its(:klass) { should == Product }
+      its(:relation) { should == User }
+      its(:klass) { should == User }
       its(:current_grid_params) { should == {} }
       its(:current_order_direction) { should == nil }
       its(:another_order_direction) { should == 'asc' }
@@ -28,26 +28,26 @@ describe MightyGrid::Base do
     end
 
     context 'with custom' do
-      subject { MightyGrid::Base.new(Product, @controller, page: 2, per_page: 10, name: 'grid1') }
+      subject { MightyGrid::Base.new(User, @controller, page: 2, per_page: 10, name: 'grid1') }
       its(:options) { should == @default_options.merge(page: 2, per_page: 10, name: 'grid1') }
     end
 
     context 'with custom' do
       before(:all){ @controller.params = {'grid' => {page: 5, per_page: 30, name: 'grid2'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:params) { should == @controller.params }
       its(:mg_params) { should == @default_options.merge(page: 5, per_page: 30, name: 'grid2') }
       after(:all){ @controller.params = {} }
     end
 
     context 'with bad options' do
-      it { expect{MightyGrid::Base.new(Product, @controller, bad_option: 123)}.to raise_error(ArgumentError) }
+      it { expect{MightyGrid::Base.new(User, @controller, bad_option: 123)}.to raise_error(ArgumentError) }
     end
   end
 
   describe '#get_current_grid_param' do
     before(:all){ @controller.params = {'grid'=>{per_page: 30}} }
-    subject { MightyGrid::Base.new(Product, @controller).get_current_grid_param(:per_page) }
+    subject { MightyGrid::Base.new(User, @controller).get_current_grid_param(:per_page) }
     it { should == 30 }
     after(:all){ @controller.params = {} }
   end
@@ -55,21 +55,21 @@ describe MightyGrid::Base do
   describe '#current_order_direction' do
     context 'with ASC controller param' do
       before(:all){ @controller.params = {'grid'=>{'order_direction' => 'asc'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:current_order_direction) { should == 'asc' }
       after(:all){ @controller.params = {} }
     end
 
     context 'with DESC controller param' do
       before(:all){ @controller.params = {'grid'=>{'order_direction' => 'desc'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:current_order_direction) { should == 'desc' }
       after(:all){ @controller.params = {} }
     end
 
     context 'with BAD controller param' do
       before(:all){ @controller.params = {'grid'=>{'order_direction' => 'bad'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:current_order_direction) { should == nil }
       after(:all){ @controller.params = {} }
     end
@@ -78,21 +78,21 @@ describe MightyGrid::Base do
   describe '#another_order_direction' do
     context 'with ASC controller param' do
       before(:all){ @controller.params = {'grid'=>{'order_direction' => 'asc'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:another_order_direction) { should == 'desc' }
       after(:all){ @controller.params = {} }
     end
 
     context 'with DESC controller param' do
       before(:all){ @controller.params = {'grid'=>{'order_direction' => 'desc'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:another_order_direction) { should == 'asc' }
       after(:all){ @controller.params = {} }
     end
 
     context 'with BAD controller param' do
       before(:all){ @controller.params = {'grid'=>{'order_direction' => 'bad'}} }
-      subject { MightyGrid::Base.new(Product, @controller) }
+      subject { MightyGrid::Base.new(User, @controller) }
       its(:another_order_direction) { should == 'asc' }
       after(:all){ @controller.params = {} }
     end
@@ -100,7 +100,7 @@ describe MightyGrid::Base do
 
   describe '#order_params' do
     before(:all){ @controller.params = {'grid'=>{'order' => 'name', 'order_direction' => 'asc'}} }
-    subject { MightyGrid::Base.new(Product, @controller) }
+    subject { MightyGrid::Base.new(User, @controller) }
     context 'with current order attribute' do
       it { subject.order_params(:name).should == {'grid'=>{order: :name, order_direction: 'desc'}} }
     end
@@ -111,7 +111,7 @@ describe MightyGrid::Base do
   end
 
   describe '#like_operator' do
-    subject { MightyGrid::Base.new(Product, @controller) }
+    subject { MightyGrid::Base.new(User, @controller) }
     context "when DB is #{ENV['DB']}" do
       case ENV['DB']
         when 'postgresql'

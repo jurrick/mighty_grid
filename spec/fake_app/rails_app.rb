@@ -18,17 +18,17 @@ app.initialize!
 
 # ROUTES
 app.routes.draw do
-  resources :products
+  resources :users
 end
 
 # MODELS
-require 'fake_app/models/active_record'
+require_relative 'models/active_record'
 
 # CONTROLLERS
 class ApplicationController < ActionController::Base; end
-class ProductsController < ApplicationController
+class UsersController < ApplicationController
   def index
-    @products_grid = init_grid(Product)
+    @users_grid = init_grid(User)
     render 'spec/fake_app/views/index', layout: false
   end
 end

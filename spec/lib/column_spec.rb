@@ -52,19 +52,19 @@ describe MightyGrid::Column do
   end
 
   describe '.render' do
-    let(:product){ Product.create(name: 'product name') }
+    let(:user){ User.create(name: 'user name') }
 
     describe 'with attribute' do
       subject(:column){ MightyGrid::Column.new(:name) }
       it 'should return attribute value' do
-        column.render(product).should == product[:name]
+        column.render(user).should == user[:name]
       end
     end
 
     describe 'with block' do
-      subject(:column){ MightyGrid::Column.new { "#{product.name} 1" } }
+      subject(:column){ MightyGrid::Column.new { "#{user.name} 1" } }
       it 'should return attribute value' do
-        column.render(product).should == "#{product[:name]} 1"
+        column.render(user).should == "#{user[:name]} 1"
       end
     end
   end

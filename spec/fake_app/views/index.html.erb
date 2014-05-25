@@ -1,8 +1,20 @@
-<%= mighty_filter_for @products_grid do |filter| %>
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<%= mighty_filter_for @users_grid do |filter| %>
+  <%= filter.label :name %>
   <%= filter.text_field :name %>
+  <%= filter.label :role %>
+  <%= filter.select :role, [:user, :publisher, :moderator, :admin].map{|r| [r.capitalize, r]}, prompt: 'Select role' %>
+  <label><%= filter.check_box :is_banned, 't' %> Banned</label>
   <%= filter.submit %>
+  <%= filter.reset %>
 <% end %>
 
-<%= grid @products_grid do |g| %>
-<% g.column :name %>
+<%= grid @users_grid do |g| %>
+  <% g.column :name %>
+  <% g.column :role %>
 <% end %>
+</body>
+</html>
