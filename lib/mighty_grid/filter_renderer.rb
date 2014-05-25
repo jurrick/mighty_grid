@@ -8,7 +8,16 @@ module MightyGrid
 
     def label(name, content_or_options = nil, options = nil, &block)
       filter_name = @grid.get_filter_name(name).parameterize('_')
-      label_tag(filter_name, content_or_options, options, &block)
+
+      if content_or_options.is_a?(Hash)
+        options = content_or_options
+      else
+        name ||= content_or_options
+      end
+
+      name = @grid.klass.human_attribute_name(name)
+
+      label_tag(filter_name, name, options, &block)
     end
 
     def text_field(name, options={})
@@ -16,7 +25,6 @@ module MightyGrid
     end
 
     def select(name, option_tags=nil, options={})
-
       @grid.filters[name] = option_tags
       selected = nil
       selected = options.delete(:selected) if options.has_key?(:selected)
