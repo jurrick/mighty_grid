@@ -21,6 +21,7 @@ Or install it yourself as:
 ### Controller
 
 You can define class or relation in <tt>init_grid</tt> method.
+
 ```
 def index
   @products_grid = init_grid(Product)
@@ -42,6 +43,7 @@ end
 ### General configuration options
 
 You can configure the following default values by overriding these values using <tt>MightyGrid.configure</tt> method.
+
 ```
 per_page          # 15 by default
 order_direction   # 'asc' by default
