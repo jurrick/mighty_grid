@@ -3,7 +3,7 @@ require 'action_view/railtie'
 
 require 'capybara/rspec'
 
-require 'fake_app/models/config'
+require_relative 'models/config'
 
 app = Class.new(Rails::Application)
 app.config.secret_token = '7295e7f2718c940f459e5062f575cd92'

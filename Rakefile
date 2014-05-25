@@ -1,28 +1,16 @@
 require "bundler/gem_tasks"
 require 'appraisal'
 require 'rspec/core/rake_task'
+require 'cucumber/rake/task'
 
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
+if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
+  task :default => :appraisal
 end
 
-desc 'Default: run unit tests.'
-task :default => "spec:all"
+desc 'Test the paperclip plugin.'
+RSpec::Core::RakeTask.new(:spec)
 
-namespace :spec do
-  %w(rails_32 rails_40 rails_41).each do |gemfile|
-    desc "Run tests against #{gemfile}"
-    task gemfile do
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle --quiet"
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle exec rake -t spec"
-    end
-  end
-
-  desc "Run all tests"
-  task :all do
-    %w(rails_32 rails_40 rails_41).each do |gemfile|
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle --quiet"
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle exec rake spec"
-    end
-  end
+desc 'Run integration test'
+Cucumber::Rake::Task.new do |t|
+  t.cucumber_opts = %w{--format progress}
 end

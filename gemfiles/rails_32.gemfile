@@ -10,6 +10,8 @@ group :test do
   gem "generator_spec"
   gem "capybara"
   gem "database_cleaner"
+  gem "cucumber-rails"
+  gem "spreewald"
   gem "coveralls", :require => false
   gem "codeclimate-test-reporter", :require => nil
   gem "pg", :require => false
