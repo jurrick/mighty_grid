@@ -5,7 +5,15 @@ describe MightyGrid::Base do
   before(:all) do
     @controller = ActionView::TestCase::TestController.new
 
-    @default_options = {page: 1, per_page: 15, name: 'grid', :include => nil, joins: nil}
+    @default_options = {
+      page: 1,
+      per_page: 15,
+      name: 'grid',
+      :include => nil,
+      joins: nil,
+      conditions: nil,
+      group: nil
+    }
   end
 
   describe '#new' do
@@ -102,10 +110,10 @@ describe MightyGrid::Base do
     before(:all){ @controller.params = {'grid'=>{'order' => 'name', 'order_direction' => 'asc'}} }
     subject { MightyGrid::Base.new(User, @controller) }
     context 'with current order attribute' do
-      it { subject.order_params(:name).should == {'grid'=>{order: :name, order_direction: 'desc'}} }
+      it { subject.order_params(:name).should == {'grid'=>{order: 'name', order_direction: 'desc'}} }
     end
     context 'with other order attribute' do
-      it { subject.order_params(:description).should == {'grid'=>{order: :description, order_direction: 'asc'}} }
+      it { subject.order_params(:description).should == {'grid'=>{order: 'description', order_direction: 'asc'}} }
     end
     after(:all){ @controller.params = {} }
   end

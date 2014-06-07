@@ -58,7 +58,7 @@ module MightyGrid
           rendering.columns.map { |column|
             content_tag :th, column.th_attrs do
               if column.options[:ordering] && column.attribute.present?
-                link_to(column.title, "?#{MightyGrid::MgHash.rec_merge(grid.params, grid.order_params(column.attribute)).except('controller', 'action').to_query}").html_safe
+                link_to(column.title, "?#{MightyGrid::MgHash.rec_merge(grid.params, grid.order_params(column.attribute, column.model)).except('controller', 'action').to_query}").html_safe
               else
                 column.title.html_safe
               end

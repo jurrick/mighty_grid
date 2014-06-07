@@ -1,7 +1,7 @@
 module MightyGrid
   class Column
 
-    attr_reader :attribute, :attrs, :th_attrs, :options, :title
+    attr_reader :attribute, :attrs, :th_attrs, :options, :title, :model
     attr_accessor :render_value
 
     def initialize(attr_or_options=nil, options=nil, &block)
@@ -15,6 +15,10 @@ module MightyGrid
         @attribute = attr_or_options
         @render_value = @attribute
       end
+
+      @model = @options[:model]
+      raise MightyGridArgumentError.new("Model of field for filtering should have type ActiveRecord") if @model && @model.superclass != ActiveRecord::Base
+      
       @attrs = @options[:html] if @options.has_key?(:html)
       @th_attrs = @options[:th_html] if @options.has_key?(:th_html)
       @title = @options.has_key?(:title) && @options[:title] || ''
@@ -23,7 +27,8 @@ module MightyGrid
     def render(record)
       case @render_value
         when String, Symbol
-          return record[@render_value]
+          rec = @model ? record.send(@model.to_s.underscore) : record
+          return rec[@render_value]
         when Proc
           value = @render_value.call(record)
           return ERB::Util.h(value).to_s.html_safe

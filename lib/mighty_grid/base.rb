@@ -11,11 +11,13 @@ module MightyGrid
       @filters = {}
 
       @options = {
-        :page     => 1,
-        :per_page => MightyGrid.config.per_page,
-        :name     => MightyGrid.config.grid_name,
-        :include  => nil,
-        :joins    => nil,
+        :page       => 1,
+        :per_page   => MightyGrid.config.per_page,
+        :name       => MightyGrid.config.grid_name,
+        :include    => nil,
+        :joins      => nil,
+        :conditions => nil,
+        :group      => nil
       }
 
       opts.assert_valid_keys(@options.keys)
@@ -23,37 +25,54 @@ module MightyGrid
 
       @name = @options[:name].to_s
 
-      load_grid_params
-
       @relation = klass_or_relation
 
       @klass = klass_or_relation.is_a?(ActiveRecord::Relation) ? klass_or_relation.klass : klass_or_relation
 
+      load_grid_params
     end
 
     def read
       apply_filters
-      @relation = @relation.order(@mg_params[:order] => current_order_direction.to_sym) if @mg_params[:order].present? && current_order_direction.present?
+      @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}") if @mg_params[:order].present? && current_order_direction.present?
       @relation = @relation.
                     page(@mg_params[:page]).
                     per(@mg_params[:per_page]).
                     includes(@options[:include]).
-                    joins(@options[:joins])
+                    joins(@options[:joins]).
+                    where(@options[:conditions]).
+                    group(@options[:group])
     end
 
     # Apply filters
     def apply_filters
       filter_params.each do |filter_name, filter_value|
-        next if filter_value.blank? || !klass.column_names.include?(filter_name)
-        field_type = klass.columns_hash[filter_name].type
+        name, table_name = filter_name.split('.').reverse
+
+        if table_name && Object.const_defined?(table_name.classify)
+          model = table_name.classify.constantize
+        else
+          model = klass
+        end
+
+        next if filter_value.blank? || !model.column_names.include?(name)
+        
+        if model && model.superclass == ActiveRecord::Base
+          filter_type = model.columns_hash[name].type
+        else
+          next
+        end
+
+        field_type ||= model.columns_hash[name].type
+        table_name = model.table_name
         
         if @filters.has_key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
-          @relation = @relation.where(filter_name => filter_value)
+          @relation = @relation.where(table_name => { filter_name => filter_value })
         elsif field_type == :boolean
           value = ['true', '1', 't'].include?(filter_value) ? true : false
-          @relation = @relation.where(filter_name => value)
+          @relation = @relation.where(table_name => {filter_name => value})
         elsif [:string, :text].include?(field_type)
-          @relation = @relation.where("#{klass.table_name}.#{filter_name} #{like_operator} ?", "%#{filter_value}%")
+          @relation = @relation.where("#{table_name}.#{name} #{like_operator} ?", "%#{filter_value}%")
         end
       end
     end
@@ -69,6 +88,9 @@ module MightyGrid
       @mg_params.merge!(@options)
       if current_grid_params
         @mg_params.merge!(current_grid_params.symbolize_keys)
+        if @mg_params[:order].present? && !@mg_params[:order].to_s.include?('.')
+          @mg_params[:order] = "#{klass.table_name}.#{@mg_params[:order]}" 
+        end
       end
     end
 
@@ -86,8 +108,9 @@ module MightyGrid
     def filter_param_name; 'f' end
 
     # Get filter name by field
-    def get_filter_name(filter_name)
-      "#{name}[#{filter_param_name}][#{filter_name}]"
+    def get_filter_name(field, model = nil)
+      field_name = model.present? ? "#{model.table_name}.#{field}" : field
+      "#{name}[#{filter_param_name}][#{field_name}]"
     end
 
     # Get current grid parameters
@@ -96,9 +119,10 @@ module MightyGrid
     end
 
     # Get order parameters
-    def order_params(attribute)
-      direction = attribute.to_s == @mg_params[:order] ? another_order_direction : 'asc'
-      {@name => {order: attribute, order_direction: direction}}
+    def order_params(attribute, model = nil)
+      order = model.present? ? "#{model.table_name}.#{attribute}" : attribute.to_s
+      direction = order == current_grid_params['order'] ? another_order_direction : 'asc'
+      {@name => {order: order, order_direction: direction}}
     end
 
     # Get current order direction
