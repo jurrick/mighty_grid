@@ -25,6 +25,83 @@ describe MightyGrid::Configuration do
     end
   end
 
+  describe 'order_type' do
+    context 'by default' do
+      its(:order_type) { should == 'single' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_type = 'pair'} }
+      its(:order_type) { should == 'pair' }
+      after { MightyGrid.configure {|c| c.order_type = 'single'} }
+    end
+  end
+
+  describe 'order_asc' do
+    context 'by default' do
+      its(:order_asc) { should == '&uarr;' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_asc = '&and;'} }
+      its(:order_asc) { should == '&and;' }
+      after { MightyGrid.configure {|c| c.order_asc = '&uarr;'} }
+    end
+  end
+
+  describe 'order_desc' do
+    context 'by default' do
+      its(:order_desc) { should == '&darr;' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_desc = '&or;'} }
+      its(:order_desc) { should == '&or;' }
+      after { MightyGrid.configure {|c| c.order_desc = '&darr;'} }
+    end
+  end
+
+  describe 'order_asc_link_class' do
+    context 'by default' do
+      its(:order_asc_link_class) { should == '' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_asc_link_class = 'btn'} }
+      its(:order_asc_link_class) { should == 'btn' }
+      after { MightyGrid.configure {|c| c.order_asc_link_class = ''} }
+    end
+  end
+
+  describe 'order_active_link_class' do
+    context 'by default' do
+      its(:order_active_link_class) { should == 'mg-order-active' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_active_link_class = 'btn-primary'} }
+      its(:order_active_link_class) { should == 'btn-primary' }
+      after { MightyGrid.configure {|c| c.order_active_link_class = ''} }
+    end
+  end
+
+  describe 'order_desc_link_class' do
+    context 'by default' do
+      its(:order_desc_link_class) { should == '' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_desc_link_class = 'btn'} }
+      its(:order_desc_link_class) { should == 'btn' }
+      after { MightyGrid.configure {|c| c.order_desc_link_class = ''} }
+    end
+  end
+
+  describe 'order_wrapper_class' do
+    context 'by default' do
+      its(:order_wrapper_class) { should == '' }
+    end
+    context 'configured via config block' do
+      before { MightyGrid.configure {|c| c.order_wrapper_class = 'btn-group'} }
+      its(:order_wrapper_class) { should == 'btn-group' }
+      after { MightyGrid.configure {|c| c.order_wrapper_class = ''} }
+    end
+  end
+
   describe 'grid_name' do
     context 'by default' do
       its(:grid_name) { should == 'grid' }

@@ -56,7 +56,7 @@ module MightyGrid
         end
 
         next if filter_value.blank? || !model.column_names.include?(name)
-        
+
         if model && model.superclass == ActiveRecord::Base
           filter_type = model.columns_hash[name].type
         else
@@ -119,10 +119,15 @@ module MightyGrid
     end
 
     # Get order parameters
-    def order_params(attribute, model = nil)
+    def order_params(attribute, model = nil, direction = nil)
       order = model.present? ? "#{model.table_name}.#{attribute}" : attribute.to_s
-      direction = order == current_grid_params['order'] ? another_order_direction : 'asc'
+      direction ||= order == current_grid_params['order'] ? another_order_direction : 'asc'
       {@name => {order: order, order_direction: direction}}
+    end
+
+    # Get current order direction if current order parameter coincides with the received parameter
+    def get_active_order_direction(parameters)
+      (parameters[@name]['order'] == current_grid_params['order']) ? current_order_direction : nil
     end
 
     # Get current order direction

@@ -1,3 +1,13 @@
 .mighty-grid .pagination {
   margin: 0;
 }
+
+.mighty-grid .mg-order-wrapper {
+  float: right !important;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.mighty-grid .mg-order-active {
+  color: #000;
+}

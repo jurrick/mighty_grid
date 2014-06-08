@@ -10,18 +10,29 @@ module MightyGrid
     end
 
     def column(attr_or_options = {}, options=nil, &block)
-      if block_given?
+      if attr_or_options.is_a?(Hash)
         options = attr_or_options.symbolize_keys
-        @columns << MightyGrid::Column.new(options, &block)
       else
         attribute = attr_or_options.to_sym
         options = {} unless options.is_a?(Hash)
-        opts = {
-          title: @grid.klass.human_attribute_name(attribute),
+      end
+
+      if attribute.present?
+        options = {
           ordering: true,
-          attribute: attribute
+          attribute: attribute,
+          title: @grid.klass.human_attribute_name(attribute)
         }.merge!(options)
-        @columns << MightyGrid::Column.new(attribute, opts)
+      end
+
+      if block_given?
+        if attribute.present?
+          @columns << MightyGrid::Column.new(attribute, options, &block)
+        else
+          @columns << MightyGrid::Column.new(options, &block)
+        end
+      else
+        @columns << MightyGrid::Column.new(attribute, options)
       end
       @total_columns = @columns.count
     end

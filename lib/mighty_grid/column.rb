@@ -8,7 +8,13 @@ module MightyGrid
       @attrs = {}
       @th_attrs = {}
       if block_given?
-        @options = attr_or_options || {}
+        if attr_or_options.is_a?(Hash)
+          @options = attr_or_options || {}
+        else
+          @options = options || {}
+          @attribute = attr_or_options if attr_or_options.present?
+        end
+        
         @render_value = block
       else
         @options = options || {}
