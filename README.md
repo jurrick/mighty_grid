@@ -1,4 +1,4 @@
-# MightyGrid [![Gem Version](http://img.shields.io/gem/v/mighty_grid.svg)](http://badge.fury.io/rb/mighty_grid) [![Build Status](https://travis-ci.org/jurrick/mighty_grid.svg?branch=master)](https://travis-ci.org/jurrick/mighty_grid) [![Code Climate](https://codeclimate.com/github/jurrick/mighty_grid.png)](https://codeclimate.com/github/jurrick/mighty_grid) [![Inline docs](http://inch-pages.github.io/github/jurrick/mighty_grid.png)](http://inch-pages.github.io/github/jurrick/mighty_grid)
+# MightyGrid [![Gem Version](http://img.shields.io/gem/v/mighty_grid.svg)](http://badge.fury.io/rb/mighty_grid) [![Build Status](https://travis-ci.org/jurrick/mighty_grid.svg?branch=master)](https://travis-ci.org/jurrick/mighty_grid) [![Code Climate](https://codeclimate.com/github/jurrick/mighty_grid.png)](https://codeclimate.com/github/jurrick/mighty_grid) [![Inline docs](http://inch-ci.org/github/jurrick/mighty_grid.png)](http://inch-ci.org/github/jurrick/mighty_grid)
 
 MightyGrid is a flexible grid solution for Ruby On Rails.
 
