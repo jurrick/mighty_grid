@@ -78,6 +78,10 @@ module MightyGrid
       end
     end
 
+    def actions_template(rendering)
+      render(partial: 'mighty_grid/actions')
+    end
+
     private
 
       def header_grid_html(rendering, grid, options)
@@ -96,13 +100,12 @@ module MightyGrid
         if column.options[:ordering] && column.attribute.present?
           order_asc = column.options[:order_asc] || options[:order_asc]
           order_desc = column.options[:order_desc] || options[:order_desc]
+          order_active = grid.get_active_order_direction(grid_order_params(grid, column))
 
           case options[:order_type]
           when 'pair'
-            order_active = grid.get_active_order_direction(grid_order_params(grid, column))
             order_asc_class = MightyGrid::MgHTML.join_html_classes({}, (order_active == 'asc' ? options[:order_active_link_class] : nil), options[:order_asc_link_class])[:class]
             order_desc_class = MightyGrid::MgHTML.join_html_classes({}, (order_active == 'desc' ? options[:order_active_link_class] : nil), options[:order_desc_link_class])[:class]
-
             html_title = column.title
             html_title += content_tag :div, class: options[:order_wrapper_class] do
               html_order = get_order_html(grid, column, order_active, order_asc, 'asc', class: order_asc_class)

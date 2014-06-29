@@ -1,0 +1,11 @@
+<% if actions.include? :show %>
+  <%= link_to 'Просмотреть', url_for(object) %>
+  <br/>
+<% end %>
+<% if actions.include? :edit %>
+  <%= link_to 'Редактировать', url_for([:edit, object]) %>
+  <br/>
+<% end %>
+<% if actions.include? :destroy %>
+  <%= link_to 'Удалить', url_for(object), method: :delete, data: {confirm: 'Are you sure?'} %>
+<% end %>
