@@ -65,7 +65,6 @@ module MightyGrid
 
         field_type ||= model.columns_hash[name].type
         table_name = model.table_name
-        
         if @filters.has_key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
           @relation = @relation.where(table_name => { filter_name => filter_value })
         elsif field_type == :boolean
@@ -89,7 +88,7 @@ module MightyGrid
       if current_grid_params
         @mg_params.merge!(current_grid_params.symbolize_keys)
         if @mg_params[:order].present? && !@mg_params[:order].to_s.include?('.')
-          @mg_params[:order] = "#{klass.table_name}.#{@mg_params[:order]}" 
+          @mg_params[:order] = "#{klass.table_name}.#{@mg_params[:order]}"
         end
       end
     end
@@ -144,12 +143,12 @@ module MightyGrid
       (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end
 
-    # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter 
+    # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter
     def like_operator
       if ActiveRecord::ConnectionAdapters.const_defined?(:PostgreSQLAdapter) && ActiveRecord::Base.connection.is_a?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
         'ILIKE'
       else
-        'LIKE'  
+        'LIKE'
       end
     end
 

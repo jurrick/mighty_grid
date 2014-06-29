@@ -27,7 +27,7 @@ module MightyGrid
       @grid.filters[name] = option_tags
       selected = nil
       selected = options.delete(:selected) if options.has_key?(:selected)
-      
+
       f_options = filter_options(name, options)
 
       selected = get_filter_param(name, f_options[:model]) if get_filter_param(name, f_options[:model])
@@ -41,7 +41,7 @@ module MightyGrid
       checked = true if get_filter_param(name)
 
       f_options = filter_options(name, options)
-      
+
       check_box_tag(@grid.get_filter_name(name, f_options[:model]), value, checked, options)
     end
 

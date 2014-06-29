@@ -1,5 +1,4 @@
 module MightyGrid
-
   class MightyGridEngine < ::Rails::Engine
     initializer 'mighty_grid_railtie.configure_rails_initialization' do |app|
 
@@ -16,5 +15,4 @@ module MightyGrid
 
     end
   end
-  
 end
