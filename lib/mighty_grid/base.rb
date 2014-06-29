@@ -1,7 +1,5 @@
 module MightyGrid
-
   class Base
-
     attr_reader :klass, :name, :relation, :options, :mg_params, :controller
     attr_accessor :output_buffer, :filters
 
@@ -151,6 +149,5 @@ module MightyGrid
         'LIKE'
       end
     end
-
   end
 end

@@ -6,7 +6,6 @@ module MightyGrid
     end
 
     def define_grid(grid, opts={}, &block)
-
       rendering = GridRenderer.new(grid, self)
 
       block.call(rendering)
@@ -43,7 +42,6 @@ module MightyGrid
       else
         grid.output_buffer = blank_slate_template(rendering)
       end
-
     end
 
     # Used after <tt>define_grid</tt> to actually output the grid HTML code.
@@ -160,6 +158,5 @@ module MightyGrid
           end.html_safe
         end
       end
-
   end
 end

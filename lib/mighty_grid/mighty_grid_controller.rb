@@ -1,7 +1,5 @@
 module MightyGrid
-
   module Controller
-
     protected
 
     attr_accessor :mighty_grid_instances

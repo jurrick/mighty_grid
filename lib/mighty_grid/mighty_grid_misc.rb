@@ -1,5 +1,4 @@
 module MightyGrid
-
   module ExceptionsMixin  #:nodoc:
     def initialize(str)  #:nodoc:
       super("MightyGrid: " + str)
@@ -9,5 +8,4 @@ module MightyGrid
   class MightyGridArgumentError < ArgumentError #:nodoc:
     include ExceptionsMixin
   end
-
 end
