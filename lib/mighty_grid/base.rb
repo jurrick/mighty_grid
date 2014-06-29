@@ -2,7 +2,7 @@ module MightyGrid
 
   class Base
 
-    attr_reader :klass, :name, :relation, :options, :mg_params
+    attr_reader :klass, :name, :relation, :options, :mg_params, :controller
     attr_accessor :output_buffer, :filters
 
     def initialize(klass_or_relation, controller, opts = {})  #:nodoc:

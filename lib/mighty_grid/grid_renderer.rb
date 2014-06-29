@@ -1,6 +1,6 @@
 module MightyGrid
   class GridRenderer
-    attr_reader :columns, :th_columns, :total_columns, :blank_slate_handler
+    attr_reader :columns, :th_columns, :blank_slate_handler
 
     def initialize(grid, view)
       @grid = grid
@@ -26,15 +26,22 @@ module MightyGrid
       end
 
       if block_given?
-        if attribute.present?
-          @columns << MightyGrid::Column.new(attribute, options, &block)
-        else
-          @columns << MightyGrid::Column.new(options, &block)
-        end
+        @columns << MightyGrid::Column.new(options, &block)
       else
-        @columns << MightyGrid::Column.new(attribute, options)
+        @columns << MightyGrid::Column.new(options)
       end
-      @total_columns = @columns.count
+    end
+
+    def actions(opts = {})
+      options = {
+        partial: 'mighty_grid/actions',
+        only: [:show, :edit, :destroy]
+      }
+
+      opts.assert_valid_keys(options.keys)
+      options.merge!(opts)
+
+      @columns << MightyGrid::Column.new({title: 'Actions'}){ |object| @grid.controller.render_to_string(partial: options[:partial], locals: {actions: options[:only], object: object})}
     end
 
     def blank_slate(html_or_opts = nil, &block)
@@ -46,5 +53,7 @@ module MightyGrid
         raise MightyGridArgumentError.new("blank_slate accepts only a string, a block, or :partial => 'path_to_partial' ")
       end
     end
+
+    def total_columns; @columns.count end
   end
 end
