@@ -1,7 +1,7 @@
 module MightyGrid
   module MgHash
     class << self
-    	# A deep merge of two hashes.
+      # A deep merge of two hashes.
       # That is, if both hashes have the same key and the values are hashes, these two hashes should also be merged.
       # Used for merging two sets of params.
       def rec_merge(hash, other)  #:nodoc:

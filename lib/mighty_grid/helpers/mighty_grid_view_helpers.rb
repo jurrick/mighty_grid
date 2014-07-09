@@ -138,7 +138,7 @@ module MightyGrid
           html_record = ''
           grid.relation.each do |rel|
             html_record += content_tag :tr do
-              rendering.columns.map{|column| content_tag :td, column.render(rel), column.attrs}.join.html_safe
+              rendering.columns.map{ |column| content_tag :td, column.render(rel), column.attrs }.join.html_safe
             end
           end
           html_record.html_safe

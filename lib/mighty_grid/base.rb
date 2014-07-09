@@ -67,7 +67,7 @@ module MightyGrid
           @relation = @relation.where(table_name => { filter_name => filter_value })
         elsif field_type == :boolean
           value = ['true', '1', 't'].include?(filter_value) ? true : false
-          @relation = @relation.where(table_name => {filter_name => value})
+          @relation = @relation.where(table_name => { filter_name => value })
         elsif [:string, :text].include?(field_type)
           @relation = @relation.where("#{table_name}.#{name} #{like_operator} ?", "%#{filter_value}%")
         end
@@ -119,7 +119,7 @@ module MightyGrid
     def order_params(attribute, model = nil, direction = nil)
       order = model.present? ? "#{model.table_name}.#{attribute}" : attribute.to_s
       direction ||= order == current_grid_params['order'] ? another_order_direction : 'asc'
-      {@name => {order: order, order_direction: direction}}
+      { @name => { order: order, order_direction: direction } }
     end
 
     # Get current order direction if current order parameter coincides with the received parameter
