@@ -5,7 +5,7 @@ describe MightyGrid::Column do
   describe '#new' do
     describe 'with attribute' do
       context 'without options' do
-        subject { MightyGrid::Column.new({attribute: :name}) }
+        subject { MightyGrid::Column.new(attribute: :name) }
         context 'parameters' do
           its(:attribute) { should == :name }
           its(:render_value) { should == :name }
@@ -16,30 +16,30 @@ describe MightyGrid::Column do
       end
 
       context 'with html option' do
-        let(:options) { {html: {class: 'column'}} }
-        subject { MightyGrid::Column.new({attribute: :name}.merge(options)) }
+        let(:options) { { html: { class: 'column' } } }
+        subject { MightyGrid::Column.new({ attribute: :name }.merge(options)) }
         its(:options) { should == options }
         its(:attrs) { should == options[:html] }
       end
 
       context 'with title option' do
-        let(:options) { {title: 'Name'} }
-        subject { MightyGrid::Column.new({attribute: :name}.merge(options)) }
+        let(:options) { { title: 'Name' } }
+        subject { MightyGrid::Column.new({ attribute: :name }.merge(options)) }
         its(:options) { should == options }
         its(:title) { should == options[:title] }
       end
 
       context 'with th_html option' do
-        let(:options) { {th_html: {class: 'active'}} }
-        subject { MightyGrid::Column.new({attribute: :name}.merge(options)) }
+        let(:options) { { th_html: { class: 'active' } } }
+        subject { MightyGrid::Column.new({ attribute: :name }.merge(options)) }
         its(:options) { should == options }
-        its(:th_attrs) { should == {class: 'active'} }
+        its(:th_attrs) { should == { class: 'active' } }
       end
     end
 
     describe 'with block' do
       context 'without options' do
-        subject { MightyGrid::Column.new {:test} }
+        subject { MightyGrid::Column.new { :test } }
         context 'parameters' do
           its(:attribute) { should == nil }
           its(:title) { should == '' }
@@ -55,7 +55,7 @@ describe MightyGrid::Column do
     let(:user) { User.create(name: 'user name') }
 
     describe 'with attribute' do
-      subject(:column) { MightyGrid::Column.new({attribute: :name}) }
+      subject(:column) { MightyGrid::Column.new({ attribute: :name }) }
       it 'should return attribute value' do
         column.render(user).should == user[:name]
       end
