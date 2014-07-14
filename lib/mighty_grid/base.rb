@@ -33,13 +33,13 @@ module MightyGrid
     def read
       apply_filters
       @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}") if @mg_params[:order].present? && current_order_direction.present?
-      @relation = @relation.
-                    page(@mg_params[:page]).
-                    per(@mg_params[:per_page]).
-                    includes(@options[:include]).
-                    joins(@options[:joins]).
-                    where(@options[:conditions]).
-                    group(@options[:group])
+      @relation = @relation
+                    .page(@mg_params[:page])
+                    .per(@mg_params[:per_page])
+                    .includes(@options[:include])
+                    .joins(@options[:joins])
+                    .where(@options[:conditions])
+                    .group(@options[:group])
     end
 
     # Apply filters
