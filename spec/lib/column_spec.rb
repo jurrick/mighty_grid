@@ -55,7 +55,7 @@ describe MightyGrid::Column do
     let(:user) { User.create(name: 'user name') }
 
     describe 'with attribute' do
-      subject(:column) { MightyGrid::Column.new({ attribute: :name }) }
+      subject(:column) { MightyGrid::Column.new(attribute: :name) }
       it 'should return attribute value' do
         column.render(user).should == user[:name]
       end

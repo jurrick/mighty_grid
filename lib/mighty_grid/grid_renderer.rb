@@ -41,7 +41,7 @@ module MightyGrid
       opts.assert_valid_keys(options.keys)
       options.merge!(opts)
 
-      @columns << MightyGrid::Column.new({ title: 'Actions' }) { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
+      @columns << MightyGrid::Column.new(title: 'Actions') { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
     end
 
     def blank_slate(html_or_opts = nil, &block)
