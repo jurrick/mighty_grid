@@ -67,9 +67,9 @@ module MightyGrid
     def blank_slate_template(rendering)
       if rendering.blank_slate_handler.present?
         case rendering.blank_slate_handler
-        when Proc; rendering.blank_slate_handler.call
-        when String; rendering.blank_slate_handler
-        when Hash; render(rendering.blank_slate_handler)
+        when Proc then rendering.blank_slate_handler.call
+        when String then rendering.blank_slate_handler
+        when Hash then render(rendering.blank_slate_handler)
         end
       else
         content_tag :div, 'No records found'
