@@ -47,14 +47,14 @@ module MightyGrid
 
     # Get button for Apply filter changes
     def submit(content = nil, options = {})
-      content = I18n.t("mighty_grid.filters.submit", default: 'Apply changes') if content.blank?
+      content = I18n.t('mighty_grid.filters.submit', default: 'Apply changes') if content.blank?
       options.merge!(type: :submit)
       content_tag(:button, content, options)
     end
 
     # Get button for Reset filter changes
     def reset(content = nil, options = {})
-      content = I18n.t("mighty_grid.filters.reset", default: 'Reset changes') if content.blank?
+      content = I18n.t('mighty_grid.filters.reset', default: 'Reset changes') if content.blank?
       options.merge!(type: :reset)
       content_tag(:button, content, options)
     end
@@ -74,7 +74,7 @@ module MightyGrid
         opts = { name: name }
         if options.is_a?(Hash) && options.has_key?(:model)
           model = options.delete(:model)
-          raise MightyGridArgumentError.new("Model of field for filtering should have type ActiveRecord") if model.present? && model.superclass != ActiveRecord::Base
+          raise MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
           opts.merge!(model: model)
           options.merge!(id: get_filter_id(opts)) if with_id
         end
