@@ -8,9 +8,9 @@ describe MightyGrid::Configuration do
       its(:per_page) { should == 15 }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.per_page = 17} }
+      before { MightyGrid.configure { |c| c.per_page = 17 } }
       its(:per_page) { should == 17 }
-      after { MightyGrid.configure {|c| c.per_page = 15} }
+      after { MightyGrid.configure { |c| c.per_page = 15 } }
     end
   end
 
@@ -19,9 +19,9 @@ describe MightyGrid::Configuration do
       its(:order_direction) { should == 'asc' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_direction = 'desc'} }
+      before { MightyGrid.configure { |c| c.order_direction = 'desc' } }
       its(:order_direction) { should == 'desc' }
-      after { MightyGrid.configure {|c| c.order_direction = 'asc'} }
+      after { MightyGrid.configure { |c| c.order_direction = 'asc' } }
     end
   end
 
@@ -30,9 +30,9 @@ describe MightyGrid::Configuration do
       its(:order_type) { should == 'single' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_type = 'pair'} }
+      before { MightyGrid.configure { |c| c.order_type = 'pair' } }
       its(:order_type) { should == 'pair' }
-      after { MightyGrid.configure {|c| c.order_type = 'single'} }
+      after { MightyGrid.configure { |c| c.order_type = 'single' } }
     end
   end
 
@@ -41,9 +41,9 @@ describe MightyGrid::Configuration do
       its(:order_asc) { should == '&uarr;' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_asc = '&and;'} }
+      before { MightyGrid.configure { |c| c.order_asc = '&and;' } }
       its(:order_asc) { should == '&and;' }
-      after { MightyGrid.configure {|c| c.order_asc = '&uarr;'} }
+      after { MightyGrid.configure { |c| c.order_asc = '&uarr;' } }
     end
   end
 
@@ -52,9 +52,9 @@ describe MightyGrid::Configuration do
       its(:order_desc) { should == '&darr;' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_desc = '&or;'} }
+      before { MightyGrid.configure { |c| c.order_desc = '&or;' } }
       its(:order_desc) { should == '&or;' }
-      after { MightyGrid.configure {|c| c.order_desc = '&darr;'} }
+      after { MightyGrid.configure { |c| c.order_desc = '&darr;' } }
     end
   end
 
@@ -63,9 +63,9 @@ describe MightyGrid::Configuration do
       its(:order_asc_link_class) { should == '' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_asc_link_class = 'btn'} }
+      before { MightyGrid.configure { |c| c.order_asc_link_class = 'btn' } }
       its(:order_asc_link_class) { should == 'btn' }
-      after { MightyGrid.configure {|c| c.order_asc_link_class = ''} }
+      after { MightyGrid.configure { |c| c.order_asc_link_class = '' } }
     end
   end
 
@@ -74,9 +74,9 @@ describe MightyGrid::Configuration do
       its(:order_active_link_class) { should == 'mg-order-active' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_active_link_class = 'btn-primary'} }
+      before { MightyGrid.configure { |c| c.order_active_link_class = 'btn-primary' } }
       its(:order_active_link_class) { should == 'btn-primary' }
-      after { MightyGrid.configure {|c| c.order_active_link_class = ''} }
+      after { MightyGrid.configure { |c| c.order_active_link_class = '' } }
     end
   end
 
@@ -85,9 +85,9 @@ describe MightyGrid::Configuration do
       its(:order_desc_link_class) { should == '' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_desc_link_class = 'btn'} }
+      before { MightyGrid.configure { |c| c.order_desc_link_class = 'btn' } }
       its(:order_desc_link_class) { should == 'btn' }
-      after { MightyGrid.configure {|c| c.order_desc_link_class = ''} }
+      after { MightyGrid.configure { |c| c.order_desc_link_class = '' } }
     end
   end
 
@@ -96,9 +96,9 @@ describe MightyGrid::Configuration do
       its(:order_wrapper_class) { should == '' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.order_wrapper_class = 'btn-group'} }
+      before { MightyGrid.configure { |c| c.order_wrapper_class = 'btn-group' } }
       its(:order_wrapper_class) { should == 'btn-group' }
-      after { MightyGrid.configure {|c| c.order_wrapper_class = ''} }
+      after { MightyGrid.configure { |c| c.order_wrapper_class = '' } }
     end
   end
 
@@ -107,9 +107,9 @@ describe MightyGrid::Configuration do
       its(:grid_name) { should == 'grid' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.grid_name = 'g1'} }
+      before { MightyGrid.configure { |c| c.grid_name = 'g1' } }
       its(:grid_name) { should == 'g1' }
-      after { MightyGrid.configure {|c| c.grid_name = 'grid'} }
+      after { MightyGrid.configure { |c| c.grid_name = 'grid' } }
     end
   end
 
@@ -118,9 +118,9 @@ describe MightyGrid::Configuration do
       its(:table_class) { should == '' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.table_class = 'table'} }
+      before { MightyGrid.configure { |c| c.table_class = 'table' } }
       its(:table_class) { should == 'table' }
-      after { MightyGrid.configure {|c| c.table_class = ''} }
+      after { MightyGrid.configure { |c| c.table_class = '' } }
     end
   end
 
@@ -129,9 +129,9 @@ describe MightyGrid::Configuration do
       its(:header_tr_class) { should == '' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.header_tr_class = 'active'} }
+      before { MightyGrid.configure { |c| c.header_tr_class = 'active' } }
       its(:header_tr_class) { should == 'active' }
-      after { MightyGrid.configure {|c| c.header_tr_class = ''} }
+      after { MightyGrid.configure { |c| c.header_tr_class = '' } }
     end
   end
 
@@ -140,9 +140,9 @@ describe MightyGrid::Configuration do
       its(:pagination_theme) { should == 'mighty_grid' }
     end
     context 'configured via config block' do
-      before { MightyGrid.configure {|c| c.pagination_theme = 'pagination1'} }
+      before { MightyGrid.configure { |c| c.pagination_theme = 'pagination1' } }
       its(:pagination_theme) { should == 'pagination1' }
-      after { MightyGrid.configure {|c| c.pagination_theme = 'mighty_grid'} }
+      after { MightyGrid.configure { |c| c.pagination_theme = 'mighty_grid' } }
     end
   end
 end

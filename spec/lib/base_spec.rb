@@ -49,7 +49,7 @@ describe MightyGrid::Base do
     end
 
     context 'with bad options' do
-      it { expect {MightyGrid::Base.new(User, @controller, bad_option: 123)}.to raise_error(ArgumentError) }
+      it { expect { MightyGrid::Base.new(User, @controller, bad_option: 123) }.to raise_error(ArgumentError) }
     end
   end
 
