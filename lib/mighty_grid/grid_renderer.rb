@@ -9,7 +9,7 @@ module MightyGrid
       @blank_slate_handler = nil
     end
 
-    def column(attr_or_options = {}, options=nil, &block)
+    def column(attr_or_options = {}, options = nil, &block)
       if attr_or_options.is_a?(Hash)
         options = attr_or_options.symbolize_keys
       else

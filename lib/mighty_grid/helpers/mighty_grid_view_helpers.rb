@@ -1,11 +1,11 @@
 module MightyGrid
   module GridViewHelper
-    def grid(grid, opts={}, &block)
+    def grid(grid, opts = {}, &block)
       define_grid(grid, opts, &block)
       render_grid(grid)
     end
 
-    def define_grid(grid, opts={}, &block)
+    def define_grid(grid, opts = {}, &block)
       rendering = GridRenderer.new(grid, self)
 
       block.call(rendering)
@@ -52,7 +52,7 @@ module MightyGrid
     end
 
     # Creates a form to filter the data in the target grid.
-    def mighty_filter_for(grid, options={}, &block)
+    def mighty_filter_for(grid, options = {}, &block)
       html_options = options[:html] ||= {}
       html_options = MightyGrid::MgHTML.join_html_classes(html_options, 'mighty-grid-filter')
       html_options[:method] = options.delete(:method) if options.has_key?(:method)

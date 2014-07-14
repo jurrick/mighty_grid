@@ -17,13 +17,13 @@ module MightyGrid
     end
 
     # Get <tt>input</tt> HTML tag
-    def text_field(name, options={})
+    def text_field(name, options = {})
       f_options = filter_options(name, options)
       text_field_tag(@grid.get_filter_name(name, f_options[:model]), get_filter_param(name, f_options[:model]), options)
     end
 
     # Get <tt>select</tt> HTML tag
-    def select(name, option_tags=nil, options={})
+    def select(name, option_tags = nil, options = {})
       @grid.filters[name] = option_tags
       selected = nil
       selected = options.delete(:selected) if options.has_key?(:selected)

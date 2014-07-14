@@ -3,7 +3,7 @@ module MightyGrid
     attr_reader :attribute, :attrs, :th_attrs, :options, :title, :model, :partial
     attr_accessor :render_value
 
-    def initialize(options={}, &block)
+    def initialize(options = {}, &block)
       @attrs = {}
       @th_attrs = {}
 
