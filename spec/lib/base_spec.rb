@@ -122,10 +122,10 @@ describe MightyGrid::Base do
     subject { MightyGrid::Base.new(User, @controller) }
     context "when DB is #{ENV['DB']}" do
       case ENV['DB']
-        when 'postgresql'
-          it { subject.like_operator.should == 'ILIKE' }
-        when 'sqlite', 'mysql'
-          it { subject.like_operator.should == 'LIKE' }
+      when 'postgresql'
+        it { subject.like_operator.should == 'ILIKE' }
+      when 'sqlite', 'mysql'
+        it { subject.like_operator.should == 'LIKE' }
       end
     end
   end
