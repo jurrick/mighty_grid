@@ -87,9 +87,9 @@ module MightyGrid
 
       content_tag :thead do
         content_tag :tr, header_tr_html do
-          rendering.columns.map { |column|
+          rendering.columns.map do |column|
             content_tag(:th, column.th_attrs) { grid_title_html(grid, column, options) }
-          }.join.html_safe
+          end.join.html_safe
         end
       end
     end
