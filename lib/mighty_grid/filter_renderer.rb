@@ -61,24 +61,24 @@ module MightyGrid
 
     private
 
-      def get_filter_param(name, model = nil)
-        filter_name = model ? "#{model.table_name}.#{name}" : name
-        @grid.filter_params.has_key?(filter_name) ? @grid.filter_params[filter_name] : nil
-      end
+    def get_filter_param(name, model = nil)
+      filter_name = model ? "#{model.table_name}.#{name}" : name
+      @grid.filter_params.has_key?(filter_name) ? @grid.filter_params[filter_name] : nil
+    end
 
-      def get_filter_id(name: nil, model: nil)
-        @grid.get_filter_name(name, model).parameterize('_')
-      end
+    def get_filter_id(name: nil, model: nil)
+      @grid.get_filter_name(name, model).parameterize('_')
+    end
 
-      def filter_options(name, options, with_id = true)
-        opts = { name: name }
-        if options.is_a?(Hash) && options.has_key?(:model)
-          model = options.delete(:model)
-          raise MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
-          opts.merge!(model: model)
-          options.merge!(id: get_filter_id(opts)) if with_id
-        end
-        opts
+    def filter_options(name, options, with_id = true)
+      opts = { name: name }
+      if options.is_a?(Hash) && options.has_key?(:model)
+        model = options.delete(:model)
+        raise MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
+        opts.merge!(model: model)
+        options.merge!(id: get_filter_id(opts)) if with_id
       end
+      opts
+    end
   end
 end
