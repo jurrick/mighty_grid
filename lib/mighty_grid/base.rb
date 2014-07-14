@@ -126,7 +126,7 @@ module MightyGrid
 
     # Get current order direction if current order parameter coincides with the received parameter
     def get_active_order_direction(parameters)
-      (parameters[@name]['order'] == current_grid_params['order']) ? current_order_direction : nil
+      parameters[@name]['order'] == current_grid_params['order'] ? current_order_direction : nil
     end
 
     # Get current order direction
@@ -140,7 +140,7 @@ module MightyGrid
 
     # Get another order direction
     def another_order_direction
-      (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
+      current_grid_params.has_key?('order_direction') ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end
 
     # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter
