@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MightyGrid::Base do
-  
+
   before(:all) do
     @controller = ActionView::TestCase::TestController.new
 
