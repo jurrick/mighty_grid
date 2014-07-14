@@ -61,7 +61,7 @@ module MightyGrid
       filter = FilterRenderer.new(grid, self)
 
       output = capture(filter, &block)
-      form_tag(options[:url] || {}, html_options){ output }
+      form_tag(options[:url] || {}, html_options) { output }
     end
 
     def blank_slate_template(rendering)
@@ -88,7 +88,7 @@ module MightyGrid
         content_tag :thead do
           content_tag :tr, header_tr_html do
             rendering.columns.map { |column|
-              content_tag(:th, column.th_attrs){ grid_title_html(grid, column, options) }
+              content_tag(:th, column.th_attrs) { grid_title_html(grid, column, options) }
             }.join.html_safe
           end
         end
@@ -138,7 +138,7 @@ module MightyGrid
           html_record = ''
           grid.relation.each do |rel|
             html_record += content_tag :tr do
-              rendering.columns.map{ |column| content_tag :td, column.render(rel), column.attrs }.join.html_safe
+              rendering.columns.map { |column| content_tag :td, column.render(rel), column.attrs }.join.html_safe
             end
           end
           html_record.html_safe
