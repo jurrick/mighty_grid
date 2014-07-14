@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = MightyGrid::VERSION
   spec.authors       = ['jurrick']
   spec.email         = ['jurianp@gmail.com']
-  spec.summary       = %q{Flexible grid for Rails}
-  spec.description   = %q{Flexible grid for Rails}
+  spec.summary       = %q(Flexible grid for Rails)
+  spec.description   = %q(Flexible grid for Rails)
   spec.homepage      = 'http://github.com/jurrick/mighty_grid'
   spec.license       = 'MIT'
 
