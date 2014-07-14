@@ -102,7 +102,9 @@ module MightyGrid
     end
 
     # Get filter parameter name
-    def filter_param_name; 'f' end
+    def filter_param_name
+      'f'
+    end
 
     # Get filter name by field
     def get_filter_name(field, model = nil)

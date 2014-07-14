@@ -54,6 +54,8 @@ module MightyGrid
       end
     end
 
-    def total_columns; @columns.count end
+    def total_columns
+      @columns.count
+    end
   end
 end
