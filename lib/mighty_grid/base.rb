@@ -56,12 +56,11 @@ module MightyGrid
         next if filter_value.blank? || !model.column_names.include?(name)
 
         if model && model.superclass == ActiveRecord::Base
-          filter_type = model.columns_hash[name].type
+          field_type = model.columns_hash[name].type
         else
           next
         end
 
-        field_type ||= model.columns_hash[name].type
         table_name = model.table_name
         if @filters.has_key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
           @relation = @relation.where(table_name => { filter_name => filter_value })
