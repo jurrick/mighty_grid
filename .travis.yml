@@ -2,6 +2,7 @@ language: ruby
 rvm:
   - 2.0.0
   - 2.1.1
+  - ruby-head
 
 script: bundle exec rake spec cucumber
 
@@ -24,3 +25,7 @@ addons:
   code_climate:
     repo_token: 47bc411a11ccfed015bf25395d8204600c899e530c1c4beed1b7197aa61c6fb6
   postgresql: "9.3"
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
