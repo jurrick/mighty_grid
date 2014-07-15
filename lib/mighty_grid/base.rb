@@ -9,13 +9,13 @@ module MightyGrid
       @filters = {}
 
       @options = {
-        :page       => 1,
-        :per_page   => MightyGrid.config.per_page,
-        :name       => MightyGrid.config.grid_name,
-        :include    => nil,
-        :joins      => nil,
-        :conditions => nil,
-        :group      => nil
+        page:       1,
+        per_page:   MightyGrid.config.per_page,
+        name:       MightyGrid.config.grid_name,
+        include:    nil,
+        joins:      nil,
+        conditions: nil,
+        group:      nil
       }
 
       opts.assert_valid_keys(@options.keys)

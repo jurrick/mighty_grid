@@ -9,7 +9,7 @@ describe MightyGrid::Base do
       page: 1,
       per_page: 15,
       name: 'grid',
-      :include => nil,
+      include: nil,
       joins: nil,
       conditions: nil,
       group: nil

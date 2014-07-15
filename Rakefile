@@ -4,7 +4,7 @@ require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
 
 if !ENV['APPRAISAL_INITIALIZED'] && !ENV['TRAVIS']
-  task :default => :appraisal
+  task default: :appraisal
 end
 
 desc 'Test the paperclip plugin.'

@@ -7,7 +7,7 @@ require_relative 'models/config'
 
 app = Class.new(Rails::Application)
 app.config.secret_token = '7295e7f2718c940f459e5062f575cd92'
-app.config.session_store :cookie_store, :key => '_myapp_session'
+app.config.session_store :cookie_store, key: '_myapp_session'
 app.config.active_support.deprecation = :log
 app.config.eager_load = false
 
