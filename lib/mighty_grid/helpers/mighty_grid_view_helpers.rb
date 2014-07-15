@@ -55,7 +55,7 @@ module MightyGrid
     def mighty_filter_for(grid, options = {}, &block)
       html_options = options[:html] ||= {}
       html_options = MightyGrid::MgHTML.join_html_classes(html_options, 'mighty-grid-filter')
-      html_options[:method] = options.delete(:method) if options.has_key?(:method)
+      html_options[:method] = options.delete(:method) if options.key?(:method)
       html_options[:method] ||= :get
 
       filter = FilterRenderer.new(grid, self)

@@ -26,7 +26,7 @@ module MightyGrid
     def select(name, option_tags = nil, options = {})
       @grid.filters[name] = option_tags
       selected = nil
-      selected = options.delete(:selected) if options.has_key?(:selected)
+      selected = options.delete(:selected) if options.key?(:selected)
 
       f_options = filter_options(name, options)
 
@@ -63,7 +63,7 @@ module MightyGrid
 
     def get_filter_param(name, model = nil)
       filter_name = model ? "#{model.table_name}.#{name}" : name
-      @grid.filter_params.has_key?(filter_name) ? @grid.filter_params[filter_name] : nil
+      @grid.filter_params.key?(filter_name) ? @grid.filter_params[filter_name] : nil
     end
 
     def get_filter_id(name: nil, model: nil)
@@ -72,7 +72,7 @@ module MightyGrid
 
     def filter_options(name, options, with_id = true)
       opts = { name: name }
-      if options.is_a?(Hash) && options.has_key?(:model)
+      if options.is_a?(Hash) && options.key?(:model)
         model = options.delete(:model)
         fail MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
         opts.merge!(model: model)

@@ -45,7 +45,7 @@ module MightyGrid
     end
 
     def blank_slate(html_or_opts = nil, &block)
-      if (html_or_opts.is_a?(Hash) && html_or_opts.has_key?(:partial) || html_or_opts.is_a?(String)) && !block_given?
+      if (html_or_opts.is_a?(Hash) && html_or_opts.key?(:partial) || html_or_opts.is_a?(String)) && !block_given?
         @blank_slate_handler = html_or_opts
       elsif html_or_opts.nil? && block_given?
         @blank_slate_handler = block

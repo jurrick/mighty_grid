@@ -7,7 +7,7 @@ module MightyGrid
       @attrs = {}
       @th_attrs = {}
 
-      @attribute = options.delete(:attribute) if options.has_key?(:attribute)
+      @attribute = options.delete(:attribute) if options.key?(:attribute)
 
       @options ||= options
 
@@ -20,9 +20,9 @@ module MightyGrid
       @model = @options[:model]
       fail MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if @model && @model.superclass != ActiveRecord::Base
 
-      @attrs = @options[:html] if @options.has_key?(:html)
-      @th_attrs = @options[:th_html] if @options.has_key?(:th_html)
-      @title = @options.has_key?(:title) && @options[:title] || ''
+      @attrs = @options[:html] if @options.key?(:html)
+      @th_attrs = @options[:th_html] if @options.key?(:th_html)
+      @title = @options.key?(:title) && @options[:title] || ''
     end
 
     def render(record)

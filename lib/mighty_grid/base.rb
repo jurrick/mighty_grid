@@ -62,7 +62,7 @@ module MightyGrid
         end
 
         table_name = model.table_name
-        if @filters.has_key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
+        if @filters.key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
           @relation = @relation.where(table_name => { filter_name => filter_value })
         elsif field_type == :boolean
           value = %w(true 1 t).include?(filter_value) ? true : false
@@ -92,7 +92,7 @@ module MightyGrid
 
     # Get current grid parameter by name
     def get_current_grid_param(name)
-      current_grid_params.has_key?(name) ? current_grid_params[name] : nil
+      current_grid_params.key?(name) ? current_grid_params[name] : nil
     end
 
     # Get filter parameters
@@ -131,7 +131,7 @@ module MightyGrid
     # Get current order direction
     def current_order_direction
       direction = nil
-      if current_grid_params.has_key?('order_direction') && %w(asc desc).include?(current_grid_params['order_direction'].downcase)
+      if current_grid_params.key?('order_direction') && %w(asc desc).include?(current_grid_params['order_direction'].downcase)
         direction = current_grid_params['order_direction'].downcase
       end
       direction
@@ -139,7 +139,7 @@ module MightyGrid
 
     # Get another order direction
     def another_order_direction
-      current_grid_params.has_key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
+      current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end
 
     # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter
