@@ -74,7 +74,7 @@ module MightyGrid
       opts = { name: name }
       if options.is_a?(Hash) && options.has_key?(:model)
         model = options.delete(:model)
-        raise MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
+        fail MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
         opts.merge!(model: model)
         options.merge!(id: get_filter_id(opts)) if with_id
       end

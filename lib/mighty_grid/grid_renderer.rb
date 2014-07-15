@@ -50,7 +50,7 @@ module MightyGrid
       elsif html_or_opts.nil? && block_given?
         @blank_slate_handler = block
       else
-        raise MightyGridArgumentError.new("blank_slate accepts only a string, a block, or :partial => 'path_to_partial' ")
+        fail MightyGridArgumentError.new("blank_slate accepts only a string, a block, or :partial => 'path_to_partial' ")
       end
     end
 
