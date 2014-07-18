@@ -9,7 +9,7 @@ module MightyGrid
       @blank_slate_handler = nil
     end
 
-    def column(attr_or_options = {}, options=nil, &block)
+    def column(attr_or_options = {}, options = nil, &block)
       if attr_or_options.is_a?(Hash)
         options = attr_or_options.symbolize_keys
       else
@@ -41,19 +41,21 @@ module MightyGrid
       opts.assert_valid_keys(options.keys)
       options.merge!(opts)
 
-      @columns << MightyGrid::Column.new({ title: 'Actions' }){ |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
+      @columns << MightyGrid::Column.new(title: 'Actions') { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
     end
 
     def blank_slate(html_or_opts = nil, &block)
-      if (html_or_opts.is_a?(Hash) && html_or_opts.has_key?(:partial) || html_or_opts.is_a?(String)) && !block_given?
+      if (html_or_opts.is_a?(Hash) && html_or_opts.key?(:partial) || html_or_opts.is_a?(String)) && !block_given?
         @blank_slate_handler = html_or_opts
       elsif html_or_opts.nil? && block_given?
         @blank_slate_handler = block
       else
-        raise MightyGridArgumentError.new("blank_slate accepts only a string, a block, or :partial => 'path_to_partial' ")
+        fail MightyGridArgumentError.new("blank_slate accepts only a string, a block, or :partial => 'path_to_partial' ")
       end
     end
 
-    def total_columns; @columns.count end
+    def total_columns
+      @columns.count
+    end
   end
 end

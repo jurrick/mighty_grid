@@ -17,16 +17,16 @@ module MightyGrid
     end
 
     # Get <tt>input</tt> HTML tag
-    def text_field(name, options={})
+    def text_field(name, options = {})
       f_options = filter_options(name, options)
       text_field_tag(@grid.get_filter_name(name, f_options[:model]), get_filter_param(name, f_options[:model]), options)
     end
 
     # Get <tt>select</tt> HTML tag
-    def select(name, option_tags=nil, options={})
+    def select(name, option_tags = nil, options = {})
       @grid.filters[name] = option_tags
       selected = nil
-      selected = options.delete(:selected) if options.has_key?(:selected)
+      selected = options.delete(:selected) if options.key?(:selected)
 
       f_options = filter_options(name, options)
 
@@ -47,38 +47,38 @@ module MightyGrid
 
     # Get button for Apply filter changes
     def submit(content = nil, options = {})
-      content = I18n.t("mighty_grid.filters.submit", default: 'Apply changes') if content.blank?
+      content = I18n.t('mighty_grid.filters.submit', default: 'Apply changes') if content.blank?
       options.merge!(type: :submit)
       content_tag(:button, content, options)
     end
 
     # Get button for Reset filter changes
     def reset(content = nil, options = {})
-      content = I18n.t("mighty_grid.filters.reset", default: 'Reset changes') if content.blank?
+      content = I18n.t('mighty_grid.filters.reset', default: 'Reset changes') if content.blank?
       options.merge!(type: :reset)
       content_tag(:button, content, options)
     end
 
     private
 
-      def get_filter_param(name, model = nil)
-        filter_name = model ? "#{model.table_name}.#{name}" : name
-        @grid.filter_params.has_key?(filter_name) ? @grid.filter_params[filter_name] : nil
-      end
+    def get_filter_param(name, model = nil)
+      filter_name = model ? "#{model.table_name}.#{name}" : name
+      @grid.filter_params.key?(filter_name) ? @grid.filter_params[filter_name] : nil
+    end
 
-      def get_filter_id(name: nil, model: nil)
-        @grid.get_filter_name(name, model).parameterize('_')
-      end
+    def get_filter_id(name: nil, model: nil)
+      @grid.get_filter_name(name, model).parameterize('_')
+    end
 
-      def filter_options(name, options, with_id = true)
-        opts = { name: name }
-        if options.is_a?(Hash) && options.has_key?(:model)
-          model = options.delete(:model)
-          raise MightyGridArgumentError.new("Model of field for filtering should have type ActiveRecord") if model.present? && model.superclass != ActiveRecord::Base
-          opts.merge!(model: model)
-          options.merge!(id: get_filter_id(opts)) if with_id
-        end
-        opts
+    def filter_options(name, options, with_id = true)
+      opts = { name: name }
+      if options.is_a?(Hash) && options.key?(:model)
+        model = options.delete(:model)
+        fail MightyGridArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
+        opts.merge!(model: model)
+        options.merge!(id: get_filter_id(opts)) if with_id
       end
+      opts
+    end
   end
 end

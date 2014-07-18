@@ -9,13 +9,13 @@ module MightyGrid
       @filters = {}
 
       @options = {
-        :page       => 1,
-        :per_page   => MightyGrid.config.per_page,
-        :name       => MightyGrid.config.grid_name,
-        :include    => nil,
-        :joins      => nil,
-        :conditions => nil,
-        :group      => nil
+        page:       1,
+        per_page:   MightyGrid.config.per_page,
+        name:       MightyGrid.config.grid_name,
+        include:    nil,
+        joins:      nil,
+        conditions: nil,
+        group:      nil
       }
 
       opts.assert_valid_keys(@options.keys)
@@ -33,13 +33,13 @@ module MightyGrid
     def read
       apply_filters
       @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}") if @mg_params[:order].present? && current_order_direction.present?
-      @relation = @relation.
-                    page(@mg_params[:page]).
-                    per(@mg_params[:per_page]).
-                    includes(@options[:include]).
-                    joins(@options[:joins]).
-                    where(@options[:conditions]).
-                    group(@options[:group])
+      @relation = @relation
+                    .page(@mg_params[:page])
+                    .per(@mg_params[:per_page])
+                    .includes(@options[:include])
+                    .joins(@options[:joins])
+                    .where(@options[:conditions])
+                    .group(@options[:group])
     end
 
     # Apply filters
@@ -56,17 +56,16 @@ module MightyGrid
         next if filter_value.blank? || !model.column_names.include?(name)
 
         if model && model.superclass == ActiveRecord::Base
-          filter_type = model.columns_hash[name].type
+          field_type = model.columns_hash[name].type
         else
           next
         end
 
-        field_type ||= model.columns_hash[name].type
         table_name = model.table_name
-        if @filters.has_key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
+        if @filters.key?(filter_name.to_sym) && @filters[filter_name.to_sym].is_a?(Array)
           @relation = @relation.where(table_name => { filter_name => filter_value })
         elsif field_type == :boolean
-          value = ['true', '1', 't'].include?(filter_value) ? true : false
+          value = %w(true 1 t).include?(filter_value) ? true : false
           @relation = @relation.where(table_name => { filter_name => value })
         elsif [:string, :text].include?(field_type)
           @relation = @relation.where("#{table_name}.#{name} #{like_operator} ?", "%#{filter_value}%")
@@ -93,7 +92,7 @@ module MightyGrid
 
     # Get current grid parameter by name
     def get_current_grid_param(name)
-      current_grid_params.has_key?(name) ? current_grid_params[name] : nil
+      current_grid_params.key?(name) ? current_grid_params[name] : nil
     end
 
     # Get filter parameters
@@ -102,7 +101,9 @@ module MightyGrid
     end
 
     # Get filter parameter name
-    def filter_param_name; 'f' end
+    def filter_param_name
+      'f'
+    end
 
     # Get filter name by field
     def get_filter_name(field, model = nil)
@@ -124,13 +125,13 @@ module MightyGrid
 
     # Get current order direction if current order parameter coincides with the received parameter
     def get_active_order_direction(parameters)
-      (parameters[@name]['order'] == current_grid_params['order']) ? current_order_direction : nil
+      parameters[@name]['order'] == current_grid_params['order'] ? current_order_direction : nil
     end
 
     # Get current order direction
     def current_order_direction
       direction = nil
-      if current_grid_params.has_key?('order_direction') && ['asc', 'desc'].include?(current_grid_params['order_direction'].downcase)
+      if current_grid_params.key?('order_direction') && %w(asc desc).include?(current_grid_params['order_direction'].downcase)
         direction = current_grid_params['order_direction'].downcase
       end
       direction
@@ -138,7 +139,7 @@ module MightyGrid
 
     # Get another order direction
     def another_order_direction
-      (current_grid_params.has_key?('order_direction')) ? (['asc', 'desc'] - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
+      current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
     end
 
     # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter

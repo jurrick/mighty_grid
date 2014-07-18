@@ -1,7 +1,7 @@
 module MightyGrid
   module ExceptionsMixin  #:nodoc:
     def initialize(str)  #:nodoc:
-      super("MightyGrid: " + str)
+      super("MightyGrid: #{str}")
     end
   end
 
