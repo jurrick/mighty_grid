@@ -4,12 +4,13 @@ begin
 rescue LoadError
 end
 
-require 'capybara/cucumber'
 require 'bundler/setup'
 Bundler.require
 
+require 'capybara/cucumber'
+
 if defined? Rails
-  require_relative '../../spec/fake_app/rails_app'
+  require File.expand_path("../../../spec/dummy/config/environment.rb",  __FILE__)
 end
 
 require 'spreewald/web_steps'

@@ -1,3 +1,5 @@
+require 'rails/generators'
+
 module MightyGrid
   module Generators
     class InstallGenerator < Rails::Generators::Base

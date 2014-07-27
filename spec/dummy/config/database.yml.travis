@@ -1,0 +1,28 @@
+sqlite: &sqlite
+  adapter: sqlite3
+  database: 'db/mg_test.sqlite3'
+
+mysql: &mysql
+  adapter: mysql2
+  database: 'mg_test'
+  username: root
+
+postgresql: &postgresql
+  adapter: postgresql
+  database: 'mg_test'
+  username: postgres
+
+defaults: &defaults
+  pool: 5
+  timeout: 5000
+  host: localhost
+  <<: *<%= ENV['DB'] || "sqlite" %>
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

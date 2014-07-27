@@ -10,6 +10,8 @@ end
 require 'bundler/setup'
 Bundler.require
 
+require 'capybara/rspec'
+
 require 'coveralls'
 Coveralls.wear!
 
@@ -17,7 +19,7 @@ require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
 if defined? Rails
-  require 'fake_app/rails_app'
+  require File.expand_path("../dummy/config/environment.rb",  __FILE__)
   require 'rspec-rails'
 end
 
