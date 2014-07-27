@@ -5,7 +5,7 @@ rvm:
   - ruby-head
 
 script:
-  - bundle exec rake db:migrate
+  - bundle exec rake -f spec/dummy/Rakefile db:migrate
   - bundle exec rake spec cucumber
 
 before_script:
