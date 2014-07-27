@@ -76,10 +76,6 @@ module MightyGrid
       end
     end
 
-    def actions_template(rendering)
-      render(partial: 'mighty_grid/actions')
-    end
-
     private
 
     def header_grid_html(rendering, grid, options)
