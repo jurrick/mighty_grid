@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe MightyGrid::Base do
+  DIRECTIONS = ['asc', 'desc']
 
   before(:all) do
     @controller = ActionView::TestCase::TestController.new
@@ -61,48 +62,24 @@ describe MightyGrid::Base do
   end
 
   describe '#current_order_direction' do
-    context 'with ASC controller param' do
-      before(:all) { @controller.params = { 'grid' => { 'order_direction' => 'asc' } } }
-      subject { MightyGrid::Base.new(User, @controller) }
-      its(:current_order_direction) { should == 'asc' }
-      after(:all) { @controller.params = {} }
-    end
-
-    context 'with DESC controller param' do
-      before(:all) { @controller.params = { 'grid' => { 'order_direction' => 'desc' } } }
-      subject { MightyGrid::Base.new(User, @controller) }
-      its(:current_order_direction) { should == 'desc' }
-      after(:all) { @controller.params = {} }
-    end
-
-    context 'with BAD controller param' do
-      before(:all) { @controller.params = { 'grid' => { 'order_direction' => 'bad' } } }
-      subject { MightyGrid::Base.new(User, @controller) }
-      its(:current_order_direction) { should == nil }
-      after(:all) { @controller.params = {} }
+    (DIRECTIONS + ['bad']).each do |direction|
+      context "with #{ direction.upcase } controller param" do
+        before(:all) { @controller.params = { 'grid' => { 'order_direction' => direction } } }
+        subject { MightyGrid::Base.new(User, @controller) }
+        its(:current_order_direction) { should == (direction.in?(DIRECTIONS) ? direction : nil) }
+        after(:all) { @controller.params = {} }
+      end
     end
   end
 
   describe '#another_order_direction' do
-    context 'with ASC controller param' do
-      before(:all) { @controller.params = { 'grid' => { 'order_direction' => 'asc' } } }
-      subject { MightyGrid::Base.new(User, @controller) }
-      its(:another_order_direction) { should == 'desc' }
-      after(:all) { @controller.params = {} }
-    end
-
-    context 'with DESC controller param' do
-      before(:all) { @controller.params = { 'grid' => { 'order_direction' => 'desc' } } }
-      subject { MightyGrid::Base.new(User, @controller) }
-      its(:another_order_direction) { should == 'asc' }
-      after(:all) { @controller.params = {} }
-    end
-
-    context 'with BAD controller param' do
-      before(:all) { @controller.params = { 'grid' => { 'order_direction' => 'bad' } } }
-      subject { MightyGrid::Base.new(User, @controller) }
-      its(:another_order_direction) { should == 'asc' }
-      after(:all) { @controller.params = {} }
+    (DIRECTIONS + ['bad']).each do |direction|
+      context "with #{ direction.upcase } controller param" do
+        before(:all) { @controller.params = { 'grid' => { 'order_direction' => direction } } }
+        subject { MightyGrid::Base.new(User, @controller) }
+        its(:another_order_direction) { should == (direction == 'asc' ? 'desc' : 'asc') }
+        after(:all) { @controller.params = {} }
+      end
     end
   end
 
