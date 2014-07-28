@@ -108,7 +108,11 @@ module MightyGrid
             html_order.html_safe
           end
         else
-          html_title = link_to(column.title.html_safe, "?#{grid_order_params(grid, column).to_query}")
+          if order_active
+            html_order = ' '
+            html_order += order_active == 'asc' ? order_asc : order_desc
+          end
+          html_title = link_to("#{column.title}#{html_order}".html_safe, "?#{grid_order_params(grid, column).to_query}")
         end
         html_title.html_safe
       else
