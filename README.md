@@ -58,6 +58,17 @@ Run the following generator command, then edit the generated file.
 
     $ rails g mighty_grid:install
 
+## Running tests
+
+To run the tests you need specify database and Rails version.
+
+* List of available Rails versions: 3.2, 4.0, 4.1.
+* List of DB: sqlite, postgresql, mysql.
+
+Example run:
+
+    $ DB=postgresql appraisal rails_32 rake spec cucumber
+
 ## Contributing
 
 1. Fork it ( http://github.com/jurrick/mighty_grid/fork )
