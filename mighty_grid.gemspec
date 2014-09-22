@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-rails', '~> 2.14.2'
   spec.add_development_dependency 'appraisal'
 
-  spec.add_dependency 'kaminari', '~> 0.15.0'
+  spec.add_dependency 'kaminari', '~> 0.15'
 end
