@@ -1,5 +1,6 @@
 en:
   mighty_grid:
+    of: of
     filters:
       submit: Apply changes
       reset: Reset changes

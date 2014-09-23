@@ -151,7 +151,7 @@ module MightyGrid
           content_tag :td, colspan: rendering.total_columns do
             html_pag = paginate(grid.relation, theme: MightyGrid.config.pagination_theme, param_name: "#{grid.name}[page]")
             html_pag += content_tag :strong do
-              "#{grid.relation.offset_value + 1} &ndash; #{grid.relation.offset_value + grid.relation.size} of #{grid.relation.total_count}".html_safe
+              "#{grid.relation.offset_value + 1} &ndash; #{grid.relation.offset_value + grid.relation.size} #{I18n.t('of', scope: 'mighty_grid')} #{grid.relation.total_count}".html_safe
             end
             html_pag.html_safe
           end
