@@ -1,12 +1,13 @@
 module MightyGrid
   class GridRenderer
-    attr_reader :columns, :th_columns, :blank_slate_handler
+    attr_reader :columns, :th_columns, :blank_slate_handler, :row_attributes_handler
 
     def initialize(grid, view)
       @grid = grid
       @columns = []
       @th_columns = []
       @blank_slate_handler = nil
+      @row_attributes_handler = proc {}
     end
 
     def column(attr_or_options = {}, options = nil, &block)
@@ -42,6 +43,10 @@ module MightyGrid
       options.merge!(opts)
 
       @columns << MightyGrid::Column.new(title: 'Actions') { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
+    end
+
+    def row_attributes(&block)
+      @row_attributes_handler = block if block_given?
     end
 
     def blank_slate(html_or_opts = nil, &block)
