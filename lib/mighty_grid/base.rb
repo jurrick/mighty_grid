@@ -15,7 +15,8 @@ module MightyGrid
         include:    nil,
         joins:      nil,
         conditions: nil,
-        group:      nil
+        group:      nil,
+        order:      nil
       }
 
       opts.assert_valid_keys(@options.keys)
@@ -32,7 +33,12 @@ module MightyGrid
 
     def read
       apply_filters
-      @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}") if @mg_params[:order].present? && current_order_direction.present?
+      if @mg_params[:order].present? && current_order_direction.present?
+        @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}")
+      else
+        @relation = @relation.order(@mg_params[:order])
+      end
+
       @relation = @relation
                     .page(@mg_params[:page])
                     .per(@mg_params[:per_page])

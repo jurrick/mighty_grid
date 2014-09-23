@@ -13,7 +13,8 @@ describe MightyGrid::Base do
       include: nil,
       joins: nil,
       conditions: nil,
-      group: nil
+      group: nil,
+      order: nil
     }
   end
 
