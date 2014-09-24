@@ -87,6 +87,7 @@ module MightyGrid
     # Load grid parameters
     def load_grid_params
       @mg_params = {}
+      @mg_params[filter_param_name.to_sym] = {}
       @mg_params.merge!(@options)
       if current_grid_params
         @mg_params.merge!(current_grid_params.symbolize_keys)
@@ -103,12 +104,17 @@ module MightyGrid
 
     # Get filter parameters
     def filter_params
-      get_current_grid_param(filter_param_name) || {}
+      @mg_params[filter_param_name.to_sym] || {}
     end
 
     # Get filter parameter name
     def filter_param_name
       'f'
+    end
+
+    # Add param in filters
+    def add_filter_param(param, value)
+      @mg_params[filter_param_name.to_sym][param] = value unless @mg_params[filter_param_name.to_sym].key?(param)
     end
 
     # Get filter name by field

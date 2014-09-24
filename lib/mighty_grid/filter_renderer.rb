@@ -25,10 +25,13 @@ module MightyGrid
     # Get <tt>select</tt> HTML tag
     def select(name, option_tags = nil, options = {})
       @grid.filters[name] = option_tags
-      selected = nil
-      selected = options.delete(:selected) if options.key?(:selected)
-
       f_options = filter_options(name, options)
+
+      selected = nil
+      if options.key?(:selected)
+        selected = options.delete(:selected)
+        @grid.add_filter_param(get_filter_param_name(name, f_options[:model]), selected)
+      end
 
       selected = get_filter_param(name, f_options[:model]) if get_filter_param(name, f_options[:model])
       opts = options_for_select(option_tags, selected)
@@ -61,8 +64,12 @@ module MightyGrid
 
     private
 
+    def get_filter_param_name(name, model = nil)
+      model ? "#{model.table_name}.#{name}" : name.to_s
+    end
+
     def get_filter_param(name, model = nil)
-      filter_name = model ? "#{model.table_name}.#{name}" : name
+      filter_name = get_filter_param_name(name, model)
       @grid.filter_params.key?(filter_name) ? @grid.filter_params[filter_name] : nil
     end
 
