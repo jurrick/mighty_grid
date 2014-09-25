@@ -7,6 +7,7 @@ describe MightyGrid::Base do
     @controller = ActionView::TestCase::TestController.new
 
     @default_options = {
+      f: {},
       page: 1,
       per_page: 15,
       name: 'grid',
