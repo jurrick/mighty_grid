@@ -45,12 +45,19 @@ end
 You can configure the following default values by overriding these values using <tt>MightyGrid.configure</tt> method.
 
 ```
-per_page          # 15 by default
-order_direction   # 'asc' by default
-grid_name         # 'grid' by default
-table_class       # '' by default
-header_tr_class   # '' by default
-pagination_theme  # 'mighty_grid' by default
+per_page                # 15 by default
+order_direction         # 'asc' by default
+order_type              # 'single' by default
+order_asc               # '&uarr;' by default
+order_desc              # '&darr;' by default
+order_asc_link_class    # '' by default
+order_desc_link_class   # '' by default
+order_active_link_class # 'mg-order-active' by default
+order_wrapper_class     # '' by default
+grid_name               # 'grid' by default
+table_class             # '' by default
+header_tr_class         # '' by default
+pagination_theme        # 'mighty_grid' by default
 ```
 
 There's a handy generator that generates the default configuration file into config/initializers directory.
