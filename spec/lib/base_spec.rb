@@ -7,7 +7,6 @@ describe MightyGrid::Base do
     @controller = ActionView::TestCase::TestController.new
 
     @default_options = {
-      f: {},
       page: 1,
       per_page: 15,
       name: 'grid',
@@ -17,6 +16,7 @@ describe MightyGrid::Base do
       group: nil,
       order: nil
     }
+    @mg_params = @default_options.merge(f: {})
   end
 
   describe '#new' do
@@ -24,7 +24,7 @@ describe MightyGrid::Base do
       subject { MightyGrid::Base.new(User, @controller) }
       its(:params) { should == {} }
       its(:options) { should == @default_options }
-      its(:mg_params) { should == @default_options }
+      its(:mg_params) { should == @mg_params }
       its(:filters) { should == {} }
       its(:name) { should == 'grid' }
       its(:relation) { should == User }
@@ -47,7 +47,7 @@ describe MightyGrid::Base do
       before(:all) { @controller.params = { 'grid' => { page: 5, per_page: 30, name: 'grid2' } } }
       subject { MightyGrid::Base.new(User, @controller) }
       its(:params) { should == @controller.params }
-      its(:mg_params) { should == @default_options.merge(page: 5, per_page: 30, name: 'grid2') }
+      its(:mg_params) { should == @mg_params.merge(page: 5, per_page: 30, name: 'grid2') }
       after(:all) { @controller.params = {} }
     end
 
