@@ -1,6 +1,6 @@
 en:
   mighty_grid:
-    of: of
+    display_entries: "<strong>%{first} &ndash; %{last} of %{total}</strong>"
     filters:
       submit: Apply changes
       reset: Reset changes
