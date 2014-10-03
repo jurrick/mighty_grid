@@ -11,5 +11,5 @@ MightyGrid.configure do |config|
   # config.grid_name = 'grid'
   # config.table_class = ''
   # config.header_tr_class = ''
-  # config.pagination_template = 'mighty_grid'
+  # config.pagination_theme = 'mighty_grid'
 end
