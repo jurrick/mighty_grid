@@ -31,7 +31,8 @@ module MightyGrid
         rec = @model ? record.send(@model.to_s.underscore) : record
         return rec[@render_value.to_sym]
       when Proc
-        value = @render_value.call(record)
+        value, attrs = @render_value.call(record)
+        @attrs.merge!(attrs || {})
         return ERB::Util.h(value).to_s.html_safe
       else
         # raise
