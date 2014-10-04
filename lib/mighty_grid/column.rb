@@ -29,7 +29,7 @@ module MightyGrid
       case @render_value
       when String, Symbol
         rec = @model ? record.send(@model.to_s.underscore) : record
-        return rec.try(@render_value.to_sym)
+        return rec[@render_value.to_sym]
       when Proc
         value = @render_value.call(record)
         return ERB::Util.h(value).to_s.html_safe
