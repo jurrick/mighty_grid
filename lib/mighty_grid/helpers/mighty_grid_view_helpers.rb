@@ -8,7 +8,7 @@ module MightyGrid
     def define_grid(grid, opts = {}, &block)
       rendering = GridRenderer.new(grid, self)
 
-      block.call(rendering)
+      yield rendering
 
       options = {
         html: {},
