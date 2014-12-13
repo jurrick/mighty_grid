@@ -69,12 +69,12 @@ Run the following generator command, then edit the generated file.
 
 To run the tests you need specify database and Rails version.
 
-* List of available Rails versions: 3.2, 4.0, 4.1.
+* List of available Rails versions: 4.0, 4.1, 4.2.
 * List of DB: sqlite, postgresql, mysql.
 
 Example run:
 
-    $ DB=postgresql appraisal rails_32 rake spec cucumber
+    $ DB=postgresql appraisal rails_41 rake spec cucumber
 
 ## Contributing
 
