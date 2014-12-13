@@ -1,8 +1,10 @@
 require 'spec_helper'
-
-require 'generator_spec'
+require 'generator_spec/test_case'
+require 'generators/mighty_grid/install_generator'
 
 describe MightyGrid::Generators::InstallGenerator do
+  include GeneratorSpec::TestCase
+
   destination File.expand_path('../../tmp', __FILE__)
 
   before(:all) do
