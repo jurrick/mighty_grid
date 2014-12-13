@@ -10,8 +10,8 @@ module MightyGrid
 
       @options = {
         page:       1,
-        per_page:   MightyGrid.config.per_page,
-        name:       MightyGrid.config.grid_name,
+        per_page:   MightyGrid.per_page,
+        name:       MightyGrid.grid_name,
         include:    nil,
         joins:      nil,
         conditions: nil,
@@ -151,7 +151,7 @@ module MightyGrid
 
     # Get another order direction
     def another_order_direction
-      current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
+      current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.order_direction
     end
 
     # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter

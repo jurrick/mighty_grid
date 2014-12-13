@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'generators/mighty_grid/install_generator'
 
 require 'generator_spec'
 
@@ -11,7 +12,7 @@ describe MightyGrid::Generators::InstallGenerator do
   end
 
   it 'creates config initializer' do
-    assert_file 'config/initializers/mighty_grid_config.rb'
+    assert_file 'config/initializers/mighty_grid.rb'
   end
 
   it 'creates locale file' do

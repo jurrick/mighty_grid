@@ -1,5 +1,5 @@
 module MightyGrid
-  module GridViewHelper
+  module ViewHelpers
     def grid(grid, opts = {}, &block)
       define_grid(grid, opts, &block)
       render_grid(grid)
@@ -13,13 +13,13 @@ module MightyGrid
       options = {
         html: {},
         header_tr_html: {},
-        order_type: MightyGrid.config.order_type,
-        order_asc: MightyGrid.config.order_asc,
-        order_desc: MightyGrid.config.order_desc,
-        order_asc_link_class: MightyGrid.config.order_asc_link_class,
-        order_desc_link_class: MightyGrid.config.order_desc_link_class,
-        order_active_link_class: MightyGrid.config.order_active_link_class,
-        order_wrapper_class: MightyGrid.config.order_wrapper_class
+        order_type: MightyGrid.order_type,
+        order_asc: MightyGrid.order_asc,
+        order_desc: MightyGrid.order_desc,
+        order_asc_link_class: MightyGrid.order_asc_link_class,
+        order_desc_link_class: MightyGrid.order_desc_link_class,
+        order_active_link_class: MightyGrid.order_active_link_class,
+        order_wrapper_class: MightyGrid.order_wrapper_class
       }
 
       opts.assert_valid_keys(options.keys)
@@ -28,7 +28,7 @@ module MightyGrid
 
       options[:order_wrapper_class] = MightyGrid::MgHTML.join_html_classes({}, 'mg-order-wrapper', options[:order_wrapper_class])[:class]
 
-      table_html_attrs = MightyGrid::MgHTML.join_html_classes(options[:html], 'mighty-grid', MightyGrid.config.table_class)
+      table_html_attrs = MightyGrid::MgHTML.join_html_classes(options[:html], 'mighty-grid', MightyGrid.table_class)
 
       grid.read
 
@@ -79,7 +79,7 @@ module MightyGrid
     private
 
     def header_grid_html(rendering, grid, options)
-      header_tr_html = MightyGrid::MgHTML.join_html_classes(options[:header_tr_html], MightyGrid.config.header_tr_class)
+      header_tr_html = MightyGrid::MgHTML.join_html_classes(options[:header_tr_html], MightyGrid.header_tr_class)
 
       content_tag :thead do
         content_tag :tr, header_tr_html do
@@ -150,7 +150,7 @@ module MightyGrid
       content_tag :tfoot do
         content_tag :tr do
           content_tag :td, colspan: rendering.total_columns do
-            html_pag = paginate(grid.relation, theme: MightyGrid.config.pagination_theme, param_name: "#{grid.name}[page]")
+            html_pag = paginate(grid.relation, theme: MightyGrid.pagination_theme, param_name: "#{grid.name}[page]")
             html_pag += display_entries(grid)
             html_pag.html_safe
           end
@@ -166,3 +166,5 @@ module MightyGrid
     end
   end
 end
+
+ActionView::Base.send :include, MightyGrid::ViewHelpers

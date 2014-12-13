@@ -1,4 +1,4 @@
-MightyGrid.configure do |config|
+MightyGrid.setup do |config|
   # config.per_page = 15
   # config.order_direction = 'asc'
   # config.order_type = 'single'

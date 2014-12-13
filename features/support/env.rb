@@ -7,6 +7,7 @@ end
 require 'bundler/setup'
 Bundler.require
 
+require 'rspec/matchers'
 require 'capybara/cucumber'
 
 if defined? Rails

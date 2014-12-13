@@ -12,3 +12,7 @@ module MightyGrid
     end
   end
 end
+
+ActiveSupport.on_load :action_controller do
+  include MightyGrid::Controller
+end
