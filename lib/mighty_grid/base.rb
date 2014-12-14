@@ -1,10 +1,10 @@
 module MightyGrid
-  class Base
-    attr_reader :klass, :name, :relation, :options, :mg_params, :controller
+  class Base < AbstractController::Base
+    attr_reader :klass, :name, :relation, :options, :mg_params, :params
     attr_accessor :output_buffer, :filters
 
-    def initialize(klass_or_relation, controller, opts = {})  #:nodoc:
-      @controller = controller
+    def initialize(params, opts = {})  #:nodoc:
+      @controller_params = params
 
       @filters = {}
 
@@ -22,13 +22,28 @@ module MightyGrid
       opts.assert_valid_keys(@options.keys)
       @options.merge!(opts)
 
+      @klass = self.class.klass
+      @relation = self.class.relation
+
       @name = @options[:name].to_s
 
-      @relation = klass_or_relation
-
-      @klass = klass_or_relation.is_a?(ActiveRecord::Relation) ? klass_or_relation.klass : klass_or_relation
-
       load_grid_params
+    end
+
+    class << self
+      attr_reader :klass, :relation
+
+      def scope(&block)
+        if block_given?
+          klass_or_relation = yield
+          @relation = klass_or_relation
+          @klass = klass_or_relation.is_a?(ActiveRecord::Relation) ? klass_or_relation.klass : klass_or_relation
+        end
+      end
+
+      def filter(name)
+
+      end
     end
 
     def read
@@ -81,7 +96,7 @@ module MightyGrid
 
     # Get controller parameters
     def params
-      @controller.params
+      @controller_params
     end
 
     # Load grid parameters
