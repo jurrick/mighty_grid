@@ -9,6 +9,7 @@ module MightyGrid
   autoload :Column
   autoload :GridRenderer
   autoload :FilterRenderer
+  autoload :Exceptions
 
   @@configured = false
 
@@ -61,7 +62,6 @@ module MightyGrid
   end
 end
 
-require 'mighty_grid/mighty_grid_misc'
 require 'mighty_grid/mighty_grid_ext'
 require 'mighty_grid/controller'
 
