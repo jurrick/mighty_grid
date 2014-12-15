@@ -1,10 +1,15 @@
 module MightyGrid
   class Base < AbstractController::Base
-    attr_reader :klass, :name, :relation, :options, :mg_params, :params
+    attr_reader :klass, :name, :relation, :options, :mg_params, :params, :controller
     attr_accessor :output_buffer, :filters
 
     def initialize(params, opts = {})  #:nodoc:
       @controller_params = params
+
+      # Get active controller through params
+      if controller = "#{params[:controller].camelize}Controller".safe_constantize
+        @controller = ObjectSpace.each_object(controller).first
+      end
 
       @filters = {}
 
