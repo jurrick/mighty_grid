@@ -8,23 +8,34 @@ Add this line to your application's Gemfile:
 
     gem 'mighty_grid'
 
-And then execute:
+Then run the following generator command in order to generate files for gem customization:
 
-    $ bundle
+    $ rails g mighty_grid:install
 
-Or install it yourself as:
+After generation you will see the following files:
 
-    $ gem install mighty_grid
+  * `config/initializers/mighty_grid.rb`
+  * `config/locales/mighty_grid.en.yml`
 
 ## Quick Start
 
+### Grid
+
+Any grid can be defined in a folder `app/grids` for example as follows:
+
+```
+Class ProductsGrid < MightyGrid::Base
+  scope { Product }
+end
+```
+
 ### Controller
 
-You can define class or relation in <tt>init_grid</tt> method.
+You can initialize grid like this:
 
 ```
 def index
-  @products_grid = init_grid(Product)
+  @products_grid = ProductsGrid.new(params)
 end
 ```
 
@@ -42,7 +53,7 @@ end
 
 ### General configuration options
 
-You can configure the following default values by overriding these values using <tt>MightyGrid.configure</tt> method.
+You can configure the following default values by overriding these values using <tt>MightyGrid.setup</tt> method.
 
 ```
 per_page                # 15 by default
@@ -61,9 +72,6 @@ pagination_theme        # 'mighty_grid' by default
 ```
 
 There's a handy generator that generates the default configuration file into config/initializers directory.
-Run the following generator command, then edit the generated file.
-
-    $ rails g mighty_grid:install
 
 ## Running tests
 
