@@ -63,6 +63,5 @@ module MightyGrid
 end
 
 require 'mighty_grid/mighty_grid_ext'
-require 'mighty_grid/controller'
 
 require 'mighty_grid/engine'
