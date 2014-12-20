@@ -4,7 +4,7 @@ require 'mighty_grid/version'
 
 Gem::Specification.new do |s|
   s.name          = 'mighty_grid'
-  s.version       = MightyGrid::VERSION
+  s.version       = MightyGrid.gem_version
   s.authors       = ['jurrick']
   s.email         = ['jurianp@gmail.com']
   s.summary       = %q(Flexible grid for Rails)
