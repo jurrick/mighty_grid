@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
   def index
-    @users_grid = init_grid(User)
+    @users_grid = UsersGrid.new(params)
   end
 end

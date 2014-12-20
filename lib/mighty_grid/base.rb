@@ -1,17 +1,22 @@
 module MightyGrid
-  class Base
-    attr_reader :klass, :name, :relation, :options, :mg_params, :controller
+  class Base < AbstractController::Base
+    attr_reader :klass, :name, :relation, :options, :mg_params, :params, :controller
     attr_accessor :output_buffer, :filters
 
-    def initialize(klass_or_relation, controller, opts = {})  #:nodoc:
-      @controller = controller
+    def initialize(params, opts = {})  #:nodoc:
+      @controller_params = params
+
+      # Get active controller through params
+      if controller = "#{params[:controller].camelize}Controller".safe_constantize
+        @controller = ObjectSpace.each_object(controller).first
+      end
 
       @filters = {}
 
       @options = {
         page:       1,
-        per_page:   MightyGrid.config.per_page,
-        name:       MightyGrid.config.grid_name,
+        per_page:   MightyGrid.per_page,
+        name:       MightyGrid.grid_name,
         include:    nil,
         joins:      nil,
         conditions: nil,
@@ -22,13 +27,28 @@ module MightyGrid
       opts.assert_valid_keys(@options.keys)
       @options.merge!(opts)
 
+      @klass = self.class.klass
+      @relation = self.class.relation
+
       @name = @options[:name].to_s
 
-      @relation = klass_or_relation
-
-      @klass = klass_or_relation.is_a?(ActiveRecord::Relation) ? klass_or_relation.klass : klass_or_relation
-
       load_grid_params
+    end
+
+    class << self
+      attr_reader :klass, :relation
+
+      def scope(&block)
+        if block_given?
+          klass_or_relation = yield
+          @relation = klass_or_relation
+          @klass = klass_or_relation.is_a?(ActiveRecord::Relation) ? klass_or_relation.klass : klass_or_relation
+        end
+      end
+
+      def filter(name)
+
+      end
     end
 
     def read
@@ -81,7 +101,7 @@ module MightyGrid
 
     # Get controller parameters
     def params
-      @controller.params
+      @controller_params
     end
 
     # Load grid parameters
@@ -151,7 +171,7 @@ module MightyGrid
 
     # Get another order direction
     def another_order_direction
-      current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.config.order_direction
+      current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.order_direction
     end
 
     # Get <tt>like</tt> or <tt>ilike</tt> operator depending on the database adapter

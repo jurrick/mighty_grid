@@ -19,4 +19,6 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'pg', require: false
   gem 'mysql2', require: false
+
+  gem 'pry'
 end

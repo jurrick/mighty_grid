@@ -19,9 +19,9 @@ env:
   - DB=postgresql
 
 gemfile:
-  - gemfiles/rails_32.gemfile
   - gemfiles/rails_40.gemfile
   - gemfiles/rails_41.gemfile
+  - gemfiles/rails_42.gemfile
 
 addons:
   code_climate:
@@ -31,3 +31,5 @@ addons:
 matrix:
   allow_failures:
     - rvm: ruby-head
+
+sudo: false
