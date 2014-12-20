@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.version       = MightyGrid.gem_version
   s.authors       = ['jurrick']
   s.email         = ['jurianp@gmail.com']
-  s.summary       = %q(Flexible grid for Rails)
-  s.description   = %q(Flexible grid for Rails)
+  s.summary       = %q(Simple and flexible grid for Rails)
+  s.description   = %q(Simple and flexible grid for Rails)
   s.homepage      = 'http://github.com/jurrick/mighty_grid'
   s.license       = 'MIT'
 
