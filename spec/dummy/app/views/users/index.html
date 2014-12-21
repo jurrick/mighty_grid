@@ -2,7 +2,7 @@
   <%= filter.label :name %>
   <%= filter.text_field :name %>
   <%= filter.label :role %>
-  <%= filter.select :role, [:user, :publisher, :moderator, :admin].map{|r| [r.capitalize, r]}, prompt: 'Select role' %>
+  <%= filter.select :role, prompt: 'Select role' %>
   <label><%= filter.check_box :is_banned, 't' %> Banned</label>
   <%= filter.submit %>
   <%= filter.reset %>
