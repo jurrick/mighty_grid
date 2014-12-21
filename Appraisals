@@ -11,7 +11,7 @@ appraise "rails_41" do
 end
 
 appraise "rails_42" do
-  gem "rails", "~> 4.2.0.rc3"
-  gem "activerecord", "~> 4.2.0.rc3", require: 'active_record'
+  gem "rails", "~> 4.2.0"
+  gem "activerecord", "~> 4.2.0", require: 'active_record'
   gem 'coffee-rails', '~> 4.1.0'
 end
