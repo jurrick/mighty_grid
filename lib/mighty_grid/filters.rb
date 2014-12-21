@@ -23,8 +23,8 @@ module MightyGrid
         map_type :boolean, to: MightyGrid::Filters::BooleanFilter
       end
 
-      base.extend ClassMethods
-      base.include InstanceMethods
+      base.send :extend, ClassMethods
+      base.send :include, InstanceMethods
     end
 
     module InstanceMethods
