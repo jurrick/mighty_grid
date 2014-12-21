@@ -10,6 +10,7 @@ module MightyGrid
     autoload :TextFilter
     autoload :EnumFilter
     autoload :BooleanFilter
+    autoload :CustomFilter
 
     def self.included(base)
       base.class_eval do
@@ -21,6 +22,7 @@ module MightyGrid
         map_type :text, to: MightyGrid::Filters::TextFilter
         map_type :enum, to: MightyGrid::Filters::EnumFilter
         map_type :boolean, to: MightyGrid::Filters::BooleanFilter
+        map_type :custom, to: MightyGrid::Filters::CustomFilter
       end
 
       base.send :extend, ClassMethods
@@ -72,13 +74,19 @@ module MightyGrid
             @relation = @relation.where(table_name => { filter.attribute => value })
           when StringFilter, TextFilter
             @relation = @relation.where("#{table_name}.#{filter.attribute} #{like_operator} ?", "%#{filter_value}%")
+          when CustomFilter
+            if filter.scope.kind_of?(Proc)
+              @relation = filter.scope.call(@relation, filter_value)
+            else
+              @relation = @relation.send(filter.scope, filter_value)
+            end
           end
         end
       end
     end
 
     module ClassMethods
-      def filter(name, type = :string, options = {})
+      def filter(name, type = :string, options = {}, &block)
         name = name.to_sym
 
         unless self.mappings.key?(type)
@@ -90,7 +98,7 @@ module MightyGrid
         else
           options.merge!(name: name)
           options.merge!(model: @klass) unless options.key?(:model)
-          self.filters[name] = self.mappings[type].new(options)
+          self.filters[name] = self.mappings[type].new(options, &block)
         end
       end
 

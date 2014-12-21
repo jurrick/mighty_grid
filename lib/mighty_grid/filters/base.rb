@@ -8,8 +8,7 @@ module MightyGrid
         name: nil,
         attribute: nil,
         model: nil,
-        default: nil,
-        by_scope: nil
+        default: nil
       }
 
 
