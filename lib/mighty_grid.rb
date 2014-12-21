@@ -6,6 +6,8 @@ module MightyGrid
   extend ActiveSupport::Autoload
 
   autoload :Base
+  autoload :Parameters
+  autoload :Filters
   autoload :Column
   autoload :GridRenderer
   autoload :FilterRenderer

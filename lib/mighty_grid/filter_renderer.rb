@@ -11,41 +11,35 @@ module MightyGrid
       options = content_or_options if content_or_options.is_a?(Hash)
       human_name = (content_or_options.is_a?(Hash) || content_or_options.nil?) ? @grid.klass.human_attribute_name(name) : content_or_options
 
-      f_options = filter_options(name, options, false)
-
-      label_tag(get_filter_id(f_options), human_name, options, &block)
+      label_tag(get_filter_id(name), human_name, options, &block)
     end
 
     # Get <tt>input</tt> HTML tag
     def text_field(name, options = {})
-      f_options = filter_options(name, options)
-      text_field_tag(@grid.get_filter_name(name, f_options[:model]), get_filter_param(name, f_options[:model]), options)
+      text_field_tag(@grid.get_filter_name(name), get_filter_param(name), options)
     end
 
     # Get <tt>select</tt> HTML tag
-    def select(name, option_tags = nil, options = {})
-      @grid.filters[name] = option_tags
-      f_options = filter_options(name, options)
+    def select(name, options = {})
+      option_tags = @grid.filters[name].collection
 
       selected = nil
       if options.key?(:selected)
         selected = options.delete(:selected)
-        @grid.add_filter_param(get_filter_param_name(name, f_options[:model]), selected)
+        @grid.add_filter_param(name, selected)
       end
 
-      selected = get_filter_param(name, f_options[:model]) if get_filter_param(name, f_options[:model])
+      selected = get_filter_param(name) if get_filter_param(name)
       opts = options_for_select(option_tags, selected)
 
-      select_tag(@grid.get_filter_name(name, f_options[:model]), opts, options)
+      select_tag(@grid.get_filter_name(name), opts, options)
     end
 
     # Get <tt>checkbox</tt>
     def check_box(name, value = '1', checked = false, options = {})
       checked = true if get_filter_param(name)
 
-      f_options = filter_options(name, options)
-
-      check_box_tag(@grid.get_filter_name(name, f_options[:model]), value, checked, options)
+      check_box_tag(@grid.get_filter_name(name), value, checked, options)
     end
 
     # Get button for Apply filter changes
@@ -64,28 +58,18 @@ module MightyGrid
 
     private
 
-    def get_filter_param_name(name, model = nil)
-      model ? "#{model.table_name}.#{name}" : name.to_s
-    end
-
-    def get_filter_param(name, model = nil)
-      filter_name = get_filter_param_name(name, model)
-      @grid.filter_params.key?(filter_name) ? @grid.filter_params[filter_name] : nil
-    end
-
-    def get_filter_id(name: nil, model: nil)
-      @grid.get_filter_name(name, model).parameterize('_')
-    end
-
-    def filter_options(name, options, with_id = true)
-      opts = { name: name }
-      if options.is_a?(Hash) && options.key?(:model)
-        model = options.delete(:model)
-        fail MightyGrid::Exceptions::ArgumentError.new('Model of field for filtering should have type ActiveRecord') if model.present? && model.superclass != ActiveRecord::Base
-        opts.merge!(model: model)
-        options.merge!(id: get_filter_id(opts)) if with_id
+    def get_filter_param(name)
+      if @grid.filter_params.key?(name.to_s)
+        @grid.filter_params[name.to_s]
+      elsif @grid.filter_params.blank? && @grid.filters[name.to_sym].default.present?
+        @grid.filters[name.to_sym].default
+      else
+        nil
       end
-      opts
+    end
+
+    def get_filter_id(name)
+      @grid.get_filter_name(name).parameterize('_')
     end
   end
 end
