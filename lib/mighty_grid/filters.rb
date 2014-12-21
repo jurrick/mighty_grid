@@ -52,11 +52,17 @@ module MightyGrid
       # Apply filters
       def apply_filters
         @filters.each_pair do |filter_name, filter|
-          next if filter_params[filter_name.to_s].blank?
+          next if (filter_params.blank?   && filter.default.blank? ||
+                   filter_params.present? && filter_params[filter_name.to_s].blank?)
 
-          filter_value = filter_params[filter_name.to_s]
+          filter_value =
+            if filter_params.present?
+              filter_params[filter_name.to_s]
+            else
+              filter.default.to_s
+            end
 
-          table_name = filter.options[:model].table_name
+          table_name = filter.model.table_name
 
           case filter
           when EnumFilter

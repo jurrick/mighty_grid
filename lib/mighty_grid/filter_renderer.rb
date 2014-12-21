@@ -59,7 +59,13 @@ module MightyGrid
     private
 
     def get_filter_param(name)
-      @grid.filter_params.key?(name.to_s) ? @grid.filter_params[name.to_s] : nil
+      if @grid.filter_params.key?(name.to_s)
+        @grid.filter_params[name.to_s]
+      elsif @grid.filter_params.blank? && @grid.filters[name.to_sym].default.present?
+        @grid.filters[name.to_sym].default
+      else
+        nil
+      end
     end
 
     def get_filter_id(name)
