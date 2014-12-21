@@ -1,7 +1,7 @@
 module MightyGrid
   module Parameters
     def self.included(base)
-      base.include InstanceMethods
+      base.send :include, InstanceMethods
     end
 
     module InstanceMethods
