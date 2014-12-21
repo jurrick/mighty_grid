@@ -30,6 +30,8 @@ module MightyGrid
       @klass = self.class.klass
       @relation = self.class.relation
 
+      @relation = yield(@relation) if block_given?
+
       @name = @options[:name].to_s
 
       load_grid_params
