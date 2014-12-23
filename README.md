@@ -57,6 +57,20 @@ After generation you will see the following files:
 
 ## Usage
 
+### Filters
+
+A simple example of the use of filters:
+
+```ruby
+class ProductsGrid < MightyGrid::Base
+  scope { Product }
+  
+  filter :name
+  filter :status, :enum, collection: [['active', 'Active'], ['inactive', 'Inactive']]
+  filter :author, :string, attribute: :name, model: User
+end
+```
+
 ### General configuration options
 
 You can configure the following default values by overriding these values using <tt>MightyGrid.setup</tt> method.
