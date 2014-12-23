@@ -6,8 +6,9 @@ MightyGrid is very simple and flexible grid solution for Ruby On Rails.
 
 * Ruby 2.x support
 * Rails 4.x support
-* Filtering grids
-* Sorting grids
+* Easy building grids
+* Flexible filtering
+* Simple sorting
 
 ## Installation
 
