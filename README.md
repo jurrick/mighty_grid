@@ -27,35 +27,33 @@ After generation you will see the following files:
 
 ## Quick Start
 
-### Grid
+1. Creating grid
 
-Any grid can be defined in a folder `app/grids` for example as follows:
+    Any grid can be created in a folder `app/grids` for example as follows:
 
-```
-Class ProductsGrid < MightyGrid::Base
-  scope { Product }
-end
-```
+    ```ruby
+    Class ProductsGrid < MightyGrid::Base
+      scope { Product }
+    end
+    ```
 
-### Controller
+2. Initialize the grid in a controller
 
-You can initialize grid like this:
+    ```ruby
+    def index
+      @products_grid = ProductsGrid.new(params)
+    end
+    ```
 
-```
-def index
-  @products_grid = ProductsGrid.new(params)
-end
-```
+3. Show created grid
 
-### Show View
-
-```
-<%= grid @products_grid do |g| %>
-  <% - g.column :id %>
-  <% - g.column :name %>
-  <% - g.column :description %>
-<% end %>
-```
+    ```ruby
+    <%= grid @products_grid do |g| %>
+      <% - g.column :id %>
+      <% - g.column :name %>
+      <% - g.column :description %>
+    <% end %>
+    ```
 
 ## Usage
 
