@@ -13,8 +13,8 @@ Gem::Specification.new do |s|
   s.license               = 'MIT'
   s.required_ruby_version = '~> 2.0'
 
-  s.files                 = Dir["{app,config,lib,vendor}/**/*"] + ["LICENSE.txt", "README.md", "Gemfile", "Rakefile"]
-  s.test_files            = Dir["{spec,features}/**/*"]
+  s.files                 = `git ls-files`.split($/)
+  s.test_files            = gem.files.grep(%r{^(spec|features)/})
   s.require_paths         = ['lib']
 
   s.add_development_dependency 'bundler', '~> 1.5'
