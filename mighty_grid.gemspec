@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '~> 2.0'
 
   s.files                 = `git ls-files`.split($/)
-  s.test_files            = gem.files.grep(%r{^(spec|features)/})
+  s.test_files            = s.files.grep(%r{^(spec|features)/})
   s.require_paths         = ['lib']
 
   s.add_development_dependency 'bundler', '~> 1.5'
