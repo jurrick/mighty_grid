@@ -32,7 +32,7 @@ After generation you will see the following files:
     Any grid can be created in a folder `app/grids` for example as follows:
 
     ```ruby
-    Class ProductsGrid < MightyGrid::Base
+    class ProductsGrid < MightyGrid::Base
       scope { Product }
     end
     ```
