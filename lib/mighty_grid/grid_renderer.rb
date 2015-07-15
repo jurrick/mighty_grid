@@ -42,7 +42,7 @@ module MightyGrid
       opts.assert_valid_keys(options.keys)
       options.merge!(opts)
 
-      @columns << MightyGrid::Column.new(title: 'Actions') { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
+      @columns << MightyGrid::Column.new(title: I18n.t('mighty_grid.actions', default: 'Actions')) { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
     end
 
     def row_attributes(&block)
