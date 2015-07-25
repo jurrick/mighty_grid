@@ -36,13 +36,16 @@ module MightyGrid
     def actions(opts = {})
       options = {
         partial: 'mighty_grid/actions',
-        only: [:show, :edit, :destroy]
+        only: [:show, :edit, :destroy],
+        html: {},
+        th_html: {},
+        title: I18n.t('mighty_grid.actions', default: 'Actions')
       }
 
       opts.assert_valid_keys(options.keys)
       options.merge!(opts)
 
-      @columns << MightyGrid::Column.new(title: I18n.t('mighty_grid.actions', default: 'Actions')) { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
+      @columns << MightyGrid::Column.new(options) { |object| @grid.controller.render_to_string(partial: options[:partial], locals: { actions: options[:only], object: object }) }
     end
 
     def row_attributes(&block)
