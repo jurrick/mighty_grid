@@ -54,7 +54,7 @@ module MightyGrid
 
     def read
       apply_filters
-      if @mg_params[:order].present? && current_order_direction.present?
+      if @mg_params[:order].present? && current_order_direction.present? && !@mg_params[:order].kind_of?(Hash)
         @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}")
       else
         @relation = @relation.order(@mg_params[:order])
