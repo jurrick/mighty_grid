@@ -18,6 +18,7 @@ test/version_tmp
 tmp
 log
 database.yml
+.DS_Store
 
 spec/dummy/db/*.sqlite3
 spec/dummy/db/*.sqlite3-journal
