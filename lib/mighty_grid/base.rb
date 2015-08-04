@@ -66,8 +66,7 @@ module MightyGrid
 
     def read
       search_apply_filter if @use_sphinx
-
-      if @use_sphinx && @query
+      if @use_sphinx && @query.present?
         ts_apply_filters
         if @mg_params[:order].present? && current_order_direction.present? && !@mg_params[:order].kind_of?(Hash)
           @sphinx_options.merge!(order: "#{@mg_params[:order]} #{current_order_direction.to_sym}")
