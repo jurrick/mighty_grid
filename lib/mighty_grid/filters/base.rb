@@ -2,6 +2,7 @@ module MightyGrid
   module Filters
     class Base
       attr_reader :options, :attribute, :model, :default
+      attr_accessor :search_value
 
       class_attribute :default_options
       self.default_options = {

@@ -3,8 +3,8 @@ module MightyGrid
     include MightyGrid::Filters
     include MightyGrid::Parameters
 
-    attr_reader :klass, :name, :relation, :options, :mg_params, :params, :controller
-    attr_accessor :output_buffer, :filters
+    attr_reader :klass, :name, :relation, :options, :mg_params, :params, :controller, :use_sphinx, :sphinx_options
+    attr_accessor :output_buffer, :filters, :query
 
     def initialize(params, opts = {})  #:nodoc:
       @controller_params = params
@@ -15,6 +15,9 @@ module MightyGrid
       end
 
       @filters = self.class.filters.dup
+      @query = self.class.try(:query).try(:dup)
+      @use_sphinx = self.class.use_sphinx || false
+      @sphinx_options = {}
 
       @options = {
         page:       1,
@@ -41,7 +44,7 @@ module MightyGrid
     end
 
     class << self
-      attr_reader :klass, :relation
+      attr_reader :klass, :relation, :use_sphinx, :sphinx_options
 
       def scope(&block)
         if block_given?
@@ -50,23 +53,45 @@ module MightyGrid
           @klass = klass_or_relation.is_a?(ActiveRecord::Relation) ? klass_or_relation.klass : klass_or_relation
         end
       end
+
+      def use_thinking_sphinx(bool=false)
+        fail MightyGrid::Exceptions::ArgumentError.new('Parameter should have type Boolean: true or false') unless bool.in? [true, false]
+        @use_sphinx = bool
+      end
+
+      def sphinx_options(options = {})
+        @sphinx_options = options
+      end
     end
 
     def read
-      apply_filters
-      if @mg_params[:order].present? && current_order_direction.present? && !@mg_params[:order].kind_of?(Hash)
-        @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}")
-      else
-        @relation = @relation.order(@mg_params[:order])
-      end
+      search_apply_filter if @use_sphinx
 
-      @relation = @relation
-                    .page(@mg_params[:page])
-                    .per(@mg_params[:per_page])
-                    .includes(@options[:include])
-                    .joins(@options[:joins])
-                    .where(@options[:conditions])
-                    .group(@options[:group])
+      if @use_sphinx && @query
+        ts_apply_filters
+        if @mg_params[:order].present? && current_order_direction.present? && !@mg_params[:order].kind_of?(Hash)
+          @sphinx_options.merge!(order: "#{@mg_params[:order]} #{current_order_direction.to_sym}")
+        else
+          @sphinx_options.merge!(order: @mg_params[:order])
+        end
+
+        @relation = @klass.search(ThinkingSphinx::Query.escape(@query), @sphinx_options)
+      else
+        ar_apply_filters
+        if @mg_params[:order].present? && current_order_direction.present? && !@mg_params[:order].kind_of?(Hash)
+          @relation = @relation.order("#{@mg_params[:order]} #{current_order_direction.to_sym}")
+        else
+          @relation = @relation.order(@mg_params[:order])
+        end
+
+        @relation = @relation
+                      .page(@mg_params[:page])
+                      .per(@mg_params[:per_page])
+                      .includes(@options[:include])
+                      .joins(@options[:joins])
+                      .where(@options[:conditions])
+                      .group(@options[:group])
+      end
     end
 
     # Get controller parameters

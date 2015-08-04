@@ -13,7 +13,11 @@ module MightyGrid
         if current_grid_params
           @mg_params.merge!(current_grid_params.symbolize_keys)
           if @mg_params[:order].present? && !@mg_params[:order].to_s.include?('.') && !@mg_params[:order].kind_of?(Hash)
-            @mg_params[:order] = "#{klass.table_name}.#{@mg_params[:order]}"
+            if @use_sphinx
+              @mg_params[:order] = @mg_params[:order].to_s
+            else
+              @mg_params[:order] = "#{klass.table_name}.#{@mg_params[:order]}"
+            end
           end
         end
       end

@@ -11,11 +11,16 @@ module MightyGrid
     autoload :EnumFilter
     autoload :BooleanFilter
     autoload :CustomFilter
+    autoload :SearchFilter
 
     def self.included(base)
       base.class_eval do
         class_attribute :filters
+        class_attribute :query
+        class_attribute :search_name
         self.filters = {}
+        self.query = nil
+        self.search_name = nil
 
         extend MapType
         map_type :string, to: MightyGrid::Filters::StringFilter
@@ -23,6 +28,7 @@ module MightyGrid
         map_type :enum, to: MightyGrid::Filters::EnumFilter
         map_type :boolean, to: MightyGrid::Filters::BooleanFilter
         map_type :custom, to: MightyGrid::Filters::CustomFilter
+        map_type :search, to: MightyGrid::Filters::SearchFilter
       end
 
       base.send :extend, ClassMethods
@@ -51,18 +57,25 @@ module MightyGrid
         "#{name}[#{filter_param_name}][#{field_name}]"
       end
 
+      def get_search_name
+        self.search_name
+      end
+
+      def get_filter_value(filter_name, filter)
+        if filter_params.present?
+          filter_params[filter_name.to_s]
+        else
+          filter.default.to_s
+        end
+      end
+
       # Apply filters
-      def apply_filters
+      def ar_apply_filters
         @filters.each_pair do |filter_name, filter|
           next if (filter_params.blank?   && filter.default.blank? ||
                    filter_params.present? && filter_params[filter_name.to_s].blank?)
 
-          filter_value =
-            if filter_params.present?
-              filter_params[filter_name.to_s]
-            else
-              filter.default.to_s
-            end
+          filter_value = get_filter_value(filter_name, filter)
 
           table_name = filter.model.table_name
 
@@ -83,6 +96,15 @@ module MightyGrid
           end
         end
       end
+
+      # Thinking Sphinx apply filters
+      def ts_apply_filters
+        # TODO: Make filters for Thinking Sphinx
+      end
+
+      def search_apply_filter
+        self.query = get_filter_value(self.search_name, @filters[self.search_name])
+      end
     end
 
     module ClassMethods
@@ -102,11 +124,17 @@ module MightyGrid
         end
       end
 
+      def search(name)
+        filter(name, :search)
+        self.search_name = name
+      end
+
       protected
 
       def inherited(child_class)
         super(child_class)
         child_class.filters = self.filters.clone
+        child_class.query = self.query.try(:clone)
       end
     end
   end

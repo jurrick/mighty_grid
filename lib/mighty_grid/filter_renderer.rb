@@ -1,6 +1,7 @@
 module MightyGrid
   class FilterRenderer
     include ActionView::Helpers
+    include ActionView::Context
 
     def initialize(grid, view)
       @grid = grid
@@ -43,17 +44,26 @@ module MightyGrid
     end
 
     # Get button for Apply filter changes
-    def submit(content = nil, options = {})
+    def submit(content = nil, options = {}, &block)
       content = I18n.t('mighty_grid.filters.submit', default: 'Apply changes') if content.blank?
       options.merge!(type: :submit)
-      content_tag(:button, content, options)
+      if block_given?
+        content_tag(:button, nil, options, &block)
+      else
+        content_tag(:button, content, options)
+      end
+
     end
 
     # Get button for Reset filter changes
-    def reset(content = nil, options = {})
+    def reset(content = nil, options = {}, &block)
       content = I18n.t('mighty_grid.filters.reset', default: 'Reset changes') if content.blank?
       options.merge!(type: :reset)
-      content_tag(:button, content, options)
+      if block_given?
+        content_tag(:button, nil, options, &block)
+      else
+        content_tag(:button, content, options)
+      end
     end
 
     private
