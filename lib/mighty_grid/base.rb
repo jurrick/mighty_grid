@@ -75,6 +75,9 @@ module MightyGrid
         end
 
         @relation = @klass.search(ThinkingSphinx::Query.escape(@query), @sphinx_options)
+        @relation = @relation
+                      .page(@mg_params[:page])
+                      .per(@mg_params[:per_page])
       else
         ar_apply_filters
         if @mg_params[:order].present? && current_order_direction.present? && !@mg_params[:order].kind_of?(Hash)
