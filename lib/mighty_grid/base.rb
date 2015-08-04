@@ -74,6 +74,8 @@ module MightyGrid
           @sphinx_options.merge!(order: @mg_params[:order])
         end
 
+        @sphinx_options.merge!(with: @mg_params[:conditions]) if @mg_params[:conditions].present?
+
         @relation = @klass.search(ThinkingSphinx::Query.escape(@query), @sphinx_options)
         @relation = @relation
                       .page(@mg_params[:page])
