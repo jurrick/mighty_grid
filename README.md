@@ -109,7 +109,9 @@ class ProductsGrid < MightyGrid::Base
 end
 ```
 
-Note: Scope should contain only the model class (not relation). You can have only one search field.
+Scope should contain only the model class (not relation). You can have only one search field.
+
+Note: Currently, filtering is not supported for the search.
 
 ## Running tests
 
