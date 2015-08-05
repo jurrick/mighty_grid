@@ -93,6 +93,24 @@ pagination_theme        # 'mighty_grid' by default
 
 There's a handy generator that generates the default configuration file into config/initializers directory.
 
+## Thinking Sphinx Support
+
+### Example
+
+```ruby
+class ProductsGrid < MightyGrid::Base
+  scope { Product }
+  
+  use_thinking_sphinx true
+  
+  sphinx_options indices: ['product_public_core']
+  
+  search :query
+end
+```
+
+Note: Scope should contain only the model class (not relation). You can have only one search field.
+
 ## Running tests
 
 To run the tests you need specify database and Rails version.
