@@ -1,7 +1,7 @@
 module MightyGrid
   module Filters
     class CustomFilter < Base
-      attr_reader :scope
+      attr_reader :scope, :collection
 
       def initialize(options = {}, &block)
         self.class.default_options.merge!(scope: nil, collection: nil)
