@@ -4,9 +4,11 @@ module MightyGrid
       attr_reader :scope
 
       def initialize(options = {}, &block)
-        self.class.default_options.merge!(scope: nil)
+        self.class.default_options.merge!(scope: nil, collection: nil)
 
         super(options)
+        
+        @collection = @options[:collection]
 
         if block_given?
           @scope = block
