@@ -18,7 +18,7 @@ module MightyGrid
       end
 
       @model = @options[:model]
-      fail MightyGrid::Exceptions::ArgumentError.new('Model of field for filtering should have type ActiveRecord') if @model && @model.superclass != ActiveRecord::Base
+      fail MightyGrid::Exceptions::ArgumentError.new('Model of field for filtering should have type ActiveRecord') if @model && !@model.ancestors.include?(ActiveRecord::Base)
 
       @attrs = @options[:html] if @options.key?(:html)
       @th_attrs = @options[:th_html] if @options.key?(:th_html)
