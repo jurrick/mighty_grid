@@ -134,7 +134,7 @@ module MightyGrid
     end
 
     def grid_order_params_query(grid, column, direction = nil)
-      grid_order_params(grid, column, direction).to_h.to_query
+      grid_order_params(grid, column, direction).extract!(grid.name).permit!.to_h.to_query
     end
 
     def body_grid_html(rendering, grid)
