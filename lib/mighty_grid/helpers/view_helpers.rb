@@ -112,7 +112,7 @@ module MightyGrid
             html_order = ' '
             html_order += order_active == 'asc' ? order_asc : order_desc
           end
-          html_title = link_to("#{column.title}#{html_order}".html_safe, "?#{grid_order_params(grid, column).to_query}")
+          html_title = link_to("#{column.title}#{html_order}".html_safe, "?#{grid_order_params_query(grid, column)}")
         end
         html_title.html_safe
       else
@@ -124,13 +124,17 @@ module MightyGrid
       if order_active == direction
         html = content_tag :span, order_html.html_safe, html_options
       else
-        html = link_to(order_html.html_safe, "?#{grid_order_params(grid, column, direction).to_query}", html_options)
+        html = link_to(order_html.html_safe, "?#{grid_order_params_query(grid, column, direction)}", html_options)
       end
       html.html_safe
     end
 
     def grid_order_params(grid, column, direction = nil)
       MightyGrid::MgHash.rec_merge(grid.params, grid.order_params(column.attribute, column.model, direction)).except('controller', 'action')
+    end
+
+    def grid_order_params_query(grid, column, direction = nil)
+      grid_order_params(grid, column, direction).to_h.to_query
     end
 
     def body_grid_html(rendering, grid)
