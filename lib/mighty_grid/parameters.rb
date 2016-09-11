@@ -35,27 +35,27 @@ module MightyGrid
       # Get order parameters
       def order_params(attribute, model = nil, direction = nil)
         order = model.present? ? "#{model.table_name}.#{attribute}" : attribute.to_s
-        direction ||= order == current_grid_params['order'] ? another_order_direction : 'asc'
+        direction ||= order == @mg_params[:order] ? another_order_direction : 'asc'
         { @name => { order: order, order_direction: direction } }
       end
 
       # Get current order direction if current order parameter coincides with the received parameter
       def get_active_order_direction(parameters)
-        parameters[@name]['order'] == current_grid_params['order'] ? current_order_direction : nil
+        parameters[@name]['order'] == @mg_params[:order] ? current_order_direction : nil
       end
 
       # Get current order direction
       def current_order_direction
         direction = nil
-        if current_grid_params.key?('order_direction') && %w(asc desc).include?(current_grid_params['order_direction'].downcase)
-          direction = current_grid_params['order_direction'].downcase
+        if @mg_params.key?(:order_direction) && %w(asc desc).include?(@mg_params[:order_direction].downcase)
+          direction = @mg_params[:order_direction].downcase
         end
         direction
       end
 
       # Get another order direction
       def another_order_direction
-        current_grid_params.key?('order_direction') ? (%w(asc desc) - [current_grid_params['order_direction'].to_s]).first : MightyGrid.order_direction
+        @mg_params.key?(:order_direction) ? (%w(asc desc) - [@mg_params[:order_direction].to_s]).first : MightyGrid.order_direction
       end
     end
   end

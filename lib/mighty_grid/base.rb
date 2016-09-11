@@ -7,7 +7,7 @@ module MightyGrid
     attr_accessor :output_buffer, :filters, :query
 
     def initialize(params, opts = {})  #:nodoc:
-      @controller_params = params
+      @controller_params = params.permit!.to_h
 
       # Get active controller through params
       if controller = "#{params[:controller].camelize}Controller".safe_constantize
