@@ -88,13 +88,11 @@ module MightyGrid
           @relation = @relation.order(@mg_params[:order])
         end
 
-        @relation = @relation
-                      .page(@mg_params[:page])
-                      .per(@mg_params[:per_page])
-                      .includes(@options[:include])
-                      .joins(@options[:joins])
-                      .where(@options[:conditions])
-                      .group(@options[:group])
+        @relation = @relation.page(@mg_params[:page]).per(@mg_params[:per_page])
+        @relation = @relation.includes(@options[:include]) if @options[:include].present?
+        @relation = @relation.joins(@options[:joins]) if @options[:joins].present?
+        @relation = @relation.where(@options[:conditions]) if @options[:conditions].present?
+        @relation = @relation.group(@options[:group]) if @options[:group].present?
       end
     end
 
